@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        Amatic : ['"Special Gothic Condensed One"', 'sans-serif']
+      }
+    },
   },
   plugins: [],
 }
