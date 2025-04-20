@@ -3,6 +3,7 @@ import "./App.css";
 import HomePage from "./Pages/HomePage";
 import LandingPage from "./Pages/LandingPage";
 import PostDetailsPage from "./Pages/PostDetailsPage";
+import ProfilePage from "./Pages/ProfilePage";
 function App() {
   return (
     <BrowserRouter>
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/postDetails" element={<PostDetailsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

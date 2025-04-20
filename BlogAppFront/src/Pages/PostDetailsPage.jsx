@@ -4,6 +4,7 @@ import LeftBar from "../Components/LeftBar";
 import PostComponent from "../Components/PostComponent";
 import AddComments from "../Components/AddComments";
 import AllComments from "../Components/AllComments";
+import PostUserInfo from "../Components/PostUserInfo";
 
 const PostDetailsPage = () => {
   return (
@@ -22,6 +23,9 @@ const PostDetailsPage = () => {
           <PostComponent />
           <AddComments />
           <AllComments />
+        </div>
+        <div>
+          <PostUserInfo />
         </div>
       </div>
     </div>

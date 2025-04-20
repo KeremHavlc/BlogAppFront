@@ -1,8 +1,10 @@
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full bg-white shadow-lg py-4 flex items-center justify-between border-b-2 px-8">
       {/* Logo */}
@@ -20,9 +22,16 @@ const Header = () => {
       </div>
 
       {/* Profil */}
-      <div className="w-[200px] flex justify-end pr-16">
+      <div
+        onClick={() => navigate("/profile")}
+        className="w-[200px] flex justify-end pr-16 cursor-pointer"
+      >
         <div className="flex flex-col items-center">
-          <Avatar size="large" icon={<UserOutlined />} />
+          <Avatar
+            size="large"
+            icon={<UserOutlined />}
+            className="hover:text-red-500"
+          />
           <h2 className="mt-1">Profil</h2>
         </div>
       </div>

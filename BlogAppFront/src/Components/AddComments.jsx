@@ -18,6 +18,7 @@ const AddComments = () => {
             onChange={(e) => setComment(e.target.value)}
             placeholder="Yorumunuzu yazın..."
             rows={1}
+            maxLength={500}
             className="w-full resize-none overflow-hidden border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-400 transition-all"
             onInput={(e) => {
               e.target.style.height = "auto";
