@@ -7,12 +7,14 @@ import {
 import { Avatar } from "antd";
 import React, { useState } from "react";
 import photo from "../assets/photo.png";
+import { useNavigate } from "react-router-dom";
+
 const PostComponent = () => {
   const [liked, setLiked] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <>
-      <div className="w-[800px] h-[680px] border ml-[120px] mb-[100px] mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl">
+      <div className="w-[800px] h-[680px] border ml-[120px] cursor-pointer mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl">
         {/* Üst Kısım */}
         <div className="mt-[20px] ml-[19px] flex justify-between">
           <div className="flex gap-2">
@@ -25,7 +27,10 @@ const PostComponent = () => {
         </div>
 
         {/* Fotoğraf */}
-        <div className="border w-[700px] h-[400px] ml-[50px] mt-4">
+        <div
+          onClick={() => navigate("/postDetails")}
+          className="border w-[700px] h-[400px] ml-[50px] mt-4"
+        >
           <img
             src={photo}
             alt="Post görseli"
@@ -34,7 +39,7 @@ const PostComponent = () => {
         </div>
 
         {/* Açıklama */}
-        <div className="mt-[85px]">
+        <div className="mt-[20px]">
           <div className="w-[700px] ml-[50px]">
             <h5 className="font-Amatic line-clamp-3">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum,
@@ -59,7 +64,10 @@ const PostComponent = () => {
             <span>Beğen</span>
           </button>
 
-          <button className="flex items-center gap-1 text-gray-700 hover:text-red-600 transition">
+          <button
+            onClick={() => navigate("/postDetails")}
+            className="flex items-center gap-1 text-gray-700 hover:text-red-600 transition"
+          >
             <MessageOutlined className="text-xl" />
             <span>Yorum Yap</span>
           </button>
