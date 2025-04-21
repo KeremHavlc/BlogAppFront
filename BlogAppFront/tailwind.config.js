@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        Amatic : ['"Special Gothic Condensed One"', 'sans-serif']
+        Amatic : ['"Special Gothic Condensed One"', 'sans-serif'],
+        GF : ['"Special Gothic Condensed One"', 'sans-serif']
       }
     },
   },

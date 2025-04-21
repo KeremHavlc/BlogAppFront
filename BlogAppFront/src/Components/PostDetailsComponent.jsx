@@ -1,4 +1,5 @@
 import {
+  ArrowLeftOutlined,
   LikeFilled,
   LikeOutlined,
   MessageOutlined,
@@ -9,7 +10,7 @@ import React, { useState } from "react";
 import photo from "../assets/photo.png";
 import { useNavigate } from "react-router-dom";
 
-const PostComponent = () => {
+const PostDetailsComponent = () => {
   const [liked, setLiked] = useState(false);
   const navigate = useNavigate();
   return (
@@ -17,6 +18,13 @@ const PostComponent = () => {
       <div className="w-[800px] h-[680px] border ml-[120px] cursor-pointer mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl">
         {/* Üst Kısım */}
         <div className="mt-[20px] ml-[19px] flex justify-between">
+          <div onClick={() => navigate("/home")}>
+            <Avatar
+              size="large"
+              icon={<ArrowLeftOutlined />}
+              className="hover:text-red-500"
+            />
+          </div>
           <div className="flex gap-2">
             <Avatar size="large" icon={<UserOutlined />} />
             <h2 className="text-lg font-bold mt-1">DemoUser</h2>
@@ -77,4 +85,4 @@ const PostComponent = () => {
   );
 };
 
-export default PostComponent;
+export default PostDetailsComponent;

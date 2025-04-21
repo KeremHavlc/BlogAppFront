@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../Components/Header";
 import LeftBar from "../Components/LeftBar";
-import PostComponent from "../Components/PostComponent";
 import AddComments from "../Components/AddComments";
 import AllComments from "../Components/AllComments";
 import PostUserInfo from "../Components/PostUserInfo";
+import PostDetailsComponent from "../Components/PostDetailsComponent";
 
 const PostDetailsPage = () => {
   return (
@@ -20,7 +20,7 @@ const PostDetailsPage = () => {
         </div>
         {/* Kaydırılabilir Ana içerik alanı */}
         <div className="flex-1 p-6 overflow-y-auto h-[calc(100vh-64px)]">
-          <PostComponent />
+          <PostDetailsComponent />
           <AddComments />
           <AllComments />
         </div>
