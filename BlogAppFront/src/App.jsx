@@ -6,10 +6,11 @@ import PostDetailsPage from "./Pages/PostDetailsPage";
 import ProfilePage from "./Pages/ProfilePage";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
-
+import { ToastContainer } from "react-fox-toast";
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
