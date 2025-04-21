@@ -3,7 +3,6 @@ import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import AccountDeleteModal from "./AccountDeleteModal";
 import AccountUpdateModal from "./AccountUpdateModal";
 import FollowerInfo from "./UserInfoComponents/FollowerInfo";
-import FollowingInfo from "./UserInfoComponents/FollowingInfo";
 import AccountOpening from "./UserInfoComponents/AccountOpening";
 import PostInfo from "./UserInfoComponents/PostInfo";
 import CommentInfo from "./UserInfoComponents/CommentInfo";
@@ -84,14 +83,11 @@ const UserInfo = () => {
           <div className="flex items-center gap-4 bg-blue-50 border border-blue-200 p-4 rounded-xl hover:shadow-md transition">
             <FollowerInfo />
           </div>
-          <div className="flex items-center gap-4 bg-green-50 border border-green-200 p-4 rounded-xl hover:shadow-md transition">
-            <FollowingInfo />
-          </div>
           <div className="flex items-center gap-4 bg-purple-50 border border-purple-200 p-4 rounded-xl hover:shadow-md transition">
             <AccountOpening accountOpening={userData?.createdAt} />
           </div>
           <div className="flex items-center gap-4 bg-indigo-50 border border-indigo-200 p-4 rounded-xl hover:shadow-md transition">
-            <PostInfo postInfo={userData?.posts ?? 0} />
+            <PostInfo />
           </div>
           <div className="flex items-center gap-4 bg-pink-50 border border-pink-200 p-4 rounded-xl hover:shadow-md transition">
             <CommentInfo />
