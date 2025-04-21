@@ -10,15 +10,40 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-
-  const handleRegister = () => {
+  const [roleId, setRoleId] = useState("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+  const handleRegister = async () => {
     if (password !== repeatPassword) {
       toast.error("Şifreler eşleşmiyor!");
       return;
     }
 
-    toast.success("Kayıt başarılı!");
-    // Devam: kayıt işlemleri vs.
+    try {
+      // POST isteği gönderiyoruz
+      const res = await fetch("https://localhost:7291/api/Auths/register", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          username,
+          password,
+          roleId,
+        }),
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+      });
+
+      const data = await res.text();
+      console.log(data);
+      // Başarılı ise
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Kayıt başarılı! Giriş yapabilirsiniz.");
+        navigate("/login");
+      } else {
+        // Backend'den gelen hata mesajını kontrol et
+        toast.error(data || "Kayıt sırasında bir hata oluştu.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Sunucuya bağlanılamıyor. Lütfen tekrar deneyin.");
+    }
   };
 
   return (

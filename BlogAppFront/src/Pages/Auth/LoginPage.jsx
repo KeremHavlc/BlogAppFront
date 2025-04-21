@@ -1,11 +1,37 @@
 import React, { useState } from "react";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-fox-toast";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const onFinish = async (values) => {
+    try {
+      const res = await fetch("https://localhost:7291/api/Auths/login", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+      });
+      if (!res.ok) {
+        const data = await res.text();
+        if (data.message) {
+          toast.error(data.message);
+        } else {
+          toast.error("Kullanıcı adı veya şifre hatalı!");
+        }
+        return;
+      }
+      const data = await res.json();
+      const token = data.accessToken;
+      navigate("/home");
+      toast.success("Giriş Başarılı!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Bir hata oluştu, lütfen tekrar deneyin!");
+    }
+  };
 
   return (
     <div className="min-h-screen select-none flex flex-col items-center justify-center bg-gradient-to-br from-red-400 to-pink-500 px-4">
@@ -37,7 +63,10 @@ const LoginPage = () => {
           </div>
         </div>
 
-        <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg transition duration-300">
+        <button
+          onClick={() => onFinish({ username, password })}
+          className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg transition duration-300"
+        >
           Giriş Yap
         </button>
 

@@ -1,17 +1,66 @@
-import React, { useState } from "react"; // useState eklendi
-import {
-  UserOutlined,
-  CalendarOutlined,
-  CommentOutlined,
-  FileTextOutlined,
-  SettingOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import AccountDeleteModal from "./AccountDeleteModal";
 import AccountUpdateModal from "./AccountUpdateModal";
+import FollowerInfo from "./UserInfoComponents/FollowerInfo";
+import FollowingInfo from "./UserInfoComponents/FollowingInfo";
+import AccountOpening from "./UserInfoComponents/AccountOpening";
+import PostInfo from "./UserInfoComponents/PostInfo";
+import CommentInfo from "./UserInfoComponents/CommentInfo";
+import { toast } from "react-fox-toast";
+
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  const getUserFromToken = () => {
+    try {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("authToken="))
+        ?.split("=")[1];
+
+      if (!token) return null;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload?.username;
+    } catch (err) {
+      console.error("JWT decode hatası:", err);
+      return null;
+    }
+  };
+  const fetchUserData = async () => {
+    const username = getUserFromToken();
+    if (!username) {
+      toast.error("Giriş yapılmamış!");
+      return;
+    }
+    try {
+      const res = await fetch(
+        `https://localhost:7291/api/Users/getByUsername?username=${username}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (!res.ok) {
+        const text = await res.text();
+        toast.error(text || "Kullanıcı bilgileri alınamadı!");
+        return;
+      }
+      const data = await res.json();
+      setUserData(data);
+    } catch (err) {
+      console.error(err);
+      toast.error("Bir hata oluştu!");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <>
       <div className="w-[1000px] h-[700px] border bg-white shadow-lg rounded-2xl p-8 flex flex-col justify-between">
@@ -21,66 +70,31 @@ const UserInfo = () => {
             <UserOutlined />
           </div>
           <div>
-            <h2 className="text-2xl font-semibold">John Doe</h2>
-            <p className="text-gray-500">@johndoe</p>
+            <h2 className="text-2xl font-semibold">
+              {userData?.username || "Ad Soyad"}
+            </h2>
+            <p className="text-gray-500">
+              @{userData?.username || "kullaniciadi"}
+            </p>
           </div>
         </div>
 
         {/* Kullanıcı İstatistikleri */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-          {/* Takipçi */}
           <div className="flex items-center gap-4 bg-blue-50 border border-blue-200 p-4 rounded-xl hover:shadow-md transition">
-            <div className="p-2 bg-blue-100 rounded-full text-blue-600">
-              <TeamOutlined className="text-2xl" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold">124</div>
-              <div className="text-gray-500 text-sm">Takipçi</div>
-            </div>
+            <FollowerInfo />
           </div>
-
-          {/* Takip Edilen */}
           <div className="flex items-center gap-4 bg-green-50 border border-green-200 p-4 rounded-xl hover:shadow-md transition">
-            <div className="p-2 bg-green-100 rounded-full text-green-600">
-              <UserOutlined className="text-2xl" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold">98</div>
-              <div className="text-gray-500 text-sm">Takip Edilen</div>
-            </div>
+            <FollowingInfo />
           </div>
-
-          {/* Hesap Açılış */}
           <div className="flex items-center gap-4 bg-purple-50 border border-purple-200 p-4 rounded-xl hover:shadow-md transition">
-            <div className="p-2 bg-purple-100 rounded-full text-purple-600">
-              <CalendarOutlined className="text-2xl" />
-            </div>
-            <div>
-              <div className="text-md font-semibold">01.01.2023</div>
-              <div className="text-gray-500 text-sm">Hesap Açılış</div>
-            </div>
+            <AccountOpening accountOpening={userData?.createdAt} />
           </div>
-
-          {/* Gönderi */}
           <div className="flex items-center gap-4 bg-indigo-50 border border-indigo-200 p-4 rounded-xl hover:shadow-md transition">
-            <div className="p-2 bg-indigo-100 rounded-full text-indigo-600">
-              <FileTextOutlined className="text-2xl" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold">45</div>
-              <div className="text-gray-500 text-sm">Gönderi</div>
-            </div>
+            <PostInfo postInfo={userData?.posts ?? 0} />
           </div>
-
-          {/* Yorum */}
           <div className="flex items-center gap-4 bg-pink-50 border border-pink-200 p-4 rounded-xl hover:shadow-md transition">
-            <div className="p-2 bg-pink-100 rounded-full text-pink-600">
-              <CommentOutlined className="text-2xl" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold">120</div>
-              <div className="text-gray-500 text-sm">Yorum</div>
-            </div>
+            <CommentInfo />
           </div>
         </div>
 
@@ -106,6 +120,7 @@ const UserInfo = () => {
           </div>
         </div>
       </div>
+
       {isModalOpen && (
         <AccountDeleteModal onClose={() => setIsModalOpen(false)} />
       )}
