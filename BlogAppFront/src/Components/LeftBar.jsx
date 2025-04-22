@@ -1,14 +1,12 @@
-import React from "react";
-import {
-  HomeOutlined,
-  UserOutlined,
-  StarOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
+import React, { useState } from "react";
+import { HomeOutlined, UserOutlined, StarOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import AddPostModal from "./AddPostModal";
 
 const LeftBar = () => {
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="w-[300px] h-[700px] bg-white border ml-[95px] mt-[50px] shadow-lg rounded-lg p-6">
       {/* Üst menü */}
@@ -35,6 +33,24 @@ const LeftBar = () => {
 
       {/* Ayraç */}
       <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
+
+      <div className="flex justify-center mt-[400px]">
+        <button
+          className="w-[180px] h-[45px] bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-md transition-all duration-200"
+          onClick={() => setModalOpen(true)}
+        >
+          Gönderi Ekle
+        </button>
+      </div>
+
+      <AddPostModal
+        visible={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(data) => {
+          console.log("Gönderilen data:", data);
+          // Backend'e gönderme işlemleri buraya
+        }}
+      />
     </div>
   );
 };
