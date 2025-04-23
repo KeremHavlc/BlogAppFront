@@ -43,7 +43,7 @@ const PostComponent = () => {
               const userData = await userRes.json();
               username = userData.username || "Bilinmeyen Kullanıcı";
             }
-            console.log(data);
+
             // Beğeni sayısı
             const likeRes = await fetch(
               `https://localhost:7291/api/PostLikes/getAllPostLikes?postId=${post.id}`,
@@ -141,7 +141,7 @@ const PostComponent = () => {
         >
           {/* Üst Kısım - Kullanıcı Bilgisi ve Tarih */}
           <div
-            onClick={() => navigate("/postDetails")}
+            onClick={() => navigate(`/postDetails/${post.id}`)}
             className="mt-[20px] ml-[19px] flex justify-between"
           >
             <div className="flex items-center gap-2">
@@ -156,7 +156,7 @@ const PostComponent = () => {
           {/* Fotoğraf (Varsa) */}
           {post.image && post.image !== "null" && (
             <div
-              onClick={() => navigate("/postDetails")}
+              onClick={() => navigate(`/postDetails/${post.id}`)}
               className="border mt-6 w-[700px] h-[400px] ml-[50px]"
             >
               <img
@@ -168,7 +168,10 @@ const PostComponent = () => {
           )}
 
           {/* Açıklama */}
-          <div onClick={() => navigate("/postDetails")} className="mt-[20px]">
+          <div
+            onClick={() => navigate(`/postDetails/${post.id}`)}
+            className="mt-[20px]"
+          >
             <div className="w-[700px] ml-[50px]">
               <h5 className="font-Amatic line-clamp-3">{post.description}</h5>
             </div>
@@ -190,7 +193,7 @@ const PostComponent = () => {
             <span className="text-gray-700 ml-0">({post.likeCount})</span>{" "}
             {/* Beğeni sayısı burada */}
             <button
-              onClick={() => navigate("/postDetails")}
+              onClick={() => navigate(`/postDetails/${post.id}`)}
               className="flex items-center gap-1 text-gray-700 hover:text-red-600 transition"
             >
               <MessageOutlined className="text-xl" />
