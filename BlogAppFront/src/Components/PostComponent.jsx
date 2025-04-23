@@ -30,6 +30,7 @@ const PostComponent = () => {
       const postsWithUsers = await Promise.all(
         data.map(async (post) => {
           try {
+            // Kullanıcı adı
             const userRes = await fetch(
               `https://localhost:7291/api/Users/getById?id=${post.userId}`,
               {
@@ -44,6 +45,7 @@ const PostComponent = () => {
               username = userData.username || "Bilinmeyen Kullanıcı";
             }
 
+            // Beğeni sayısı
             const likeRes = await fetch(
               `https://localhost:7291/api/PostLikes/getAllPostLikes?postId=${post.id}`,
               {
@@ -58,15 +60,29 @@ const PostComponent = () => {
               likeCount = likesData.length;
             }
 
+            // KENDİSİ BEĞENDİ Mİ?
+            const isLikedRes = await fetch(
+              `https://localhost:7291/api/PostLikes/isLiked?postId=${post.id}`,
+              {
+                method: "GET",
+                credentials: "include",
+              }
+            );
+
+            let liked = false;
+            if (isLikedRes.ok) {
+              liked = await isLikedRes.json();
+            }
+
             return {
               ...post,
               username,
-              imageUrl: post.image ? post.image : null,
-              liked: false,
+              imageUrl: post.image || null,
+              liked,
               likeCount,
             };
           } catch (err) {
-            console.error("Kullanıcı ve beğeni verisi alınamadı", err);
+            console.error("Veri alınırken hata oluştu:", err);
             return {
               ...post,
               username: "Bilinmeyen Kullanıcı",
@@ -91,13 +107,16 @@ const PostComponent = () => {
   const handleLike = async (index, postId) => {
     const updated = [...posts];
 
-    const res = await fetch(
-      `https://localhost:7291/api/PostLikes/addLike?postId=${postId}`,
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
+    const endpoint = posts[index].liked
+      ? `https://localhost:7291/api/PostLikes/removeLike?postId=${postId}`
+      : `https://localhost:7291/api/PostLikes/addLike?postId=${postId}`;
+
+    const method = posts[index].liked ? "DELETE" : "POST";
+
+    const res = await fetch(endpoint, {
+      method: method,
+      credentials: "include",
+    });
 
     if (res.ok) {
       updated[index].liked = !updated[index].liked;
@@ -106,7 +125,7 @@ const PostComponent = () => {
         : updated[index].likeCount - 1;
       setPosts(updated);
     } else {
-      toast.error("Beğeni eklenemedi");
+      toast.error("İşlem sırasında hata oluştu.");
     }
   };
 
