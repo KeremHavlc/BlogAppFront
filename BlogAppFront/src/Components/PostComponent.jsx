@@ -38,13 +38,12 @@ const PostComponent = () => {
                 credentials: "include",
               }
             );
-
             let username = "Bilinmeyen Kullanıcı";
             if (userRes.ok) {
               const userData = await userRes.json();
               username = userData.username || "Bilinmeyen Kullanıcı";
             }
-
+            console.log(data);
             // Beğeni sayısı
             const likeRes = await fetch(
               `https://localhost:7291/api/PostLikes/getAllPostLikes?postId=${post.id}`,
@@ -137,11 +136,14 @@ const PostComponent = () => {
         <div
           key={index}
           className={`w-[800px] ${
-            post.imageUrl ? "h-[680px]" : "h-[200px]"
+            post.image && post.image !== "null" ? "h-[680px]" : "h-[200px]"
           } border ml-[120px] cursor-pointer mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300`}
         >
           {/* Üst Kısım - Kullanıcı Bilgisi ve Tarih */}
-          <div className="mt-[20px] ml-[19px] flex justify-between">
+          <div
+            onClick={() => navigate("/postDetails")}
+            className="mt-[20px] ml-[19px] flex justify-between"
+          >
             <div className="flex items-center gap-2">
               <Avatar size="large" icon={<UserOutlined />} />
               <h2 className="text-lg font-semibold">{post.username}</h2>
@@ -152,7 +154,7 @@ const PostComponent = () => {
           </div>
 
           {/* Fotoğraf (Varsa) */}
-          {post.imageUrl && (
+          {post.image && post.image !== "null" && (
             <div
               onClick={() => navigate("/postDetails")}
               className="border mt-6 w-[700px] h-[400px] ml-[50px]"
@@ -166,7 +168,7 @@ const PostComponent = () => {
           )}
 
           {/* Açıklama */}
-          <div className="mt-[20px]">
+          <div onClick={() => navigate("/postDetails")} className="mt-[20px]">
             <div className="w-[700px] ml-[50px]">
               <h5 className="font-Amatic line-clamp-3">{post.description}</h5>
             </div>
