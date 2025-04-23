@@ -23,10 +23,6 @@ const HomePage = () => {
           {/* Kaydırılabilir Ana içerik alanı */}
           <div className="flex-1 p-6 overflow-y-auto h-[calc(100vh-64px)]">
             <PostComponent />
-            <PostComponent />
-            <PostComponent />
-            <PostComponent />
-            <PostComponent />
           </div>
           <div className="sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
             <RightBar />

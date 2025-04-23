@@ -77,7 +77,9 @@ const PostComponent = () => {
             return {
               ...post,
               username,
-              imageUrl: post.image || null,
+              imageUrl: post.image
+                ? `data:image/png;base64,${post.image}`
+                : null,
               liked,
               likeCount,
             };
