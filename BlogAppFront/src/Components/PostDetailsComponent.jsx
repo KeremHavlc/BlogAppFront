@@ -156,8 +156,8 @@ const PostDetailsComponent = () => {
   return (
     <div
       className={`w-[800px] ${
-        post.imageUrl ? "min-h-[680px]" : "min-h-[200px]"
-      } border ml-[120px] mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300`}
+        post.image && post.image !== "null" ? "h-[680px]" : "h-[200px]"
+      } border ml-[120px] cursor-pointer mt-[28px] bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-300`}
     >
       {/* Üst Kısım */}
       <div className="mt-[20px] ml-[19px] flex justify-between">
@@ -178,8 +178,8 @@ const PostDetailsComponent = () => {
       </div>
 
       {/* Fotoğraf (Varsa) */}
-      {post.imageUrl && (
-        <div className="border mt-6 w-[700px] h-[400px] ml-[50px] overflow-hidden">
+      {post.image && post.image !== "null" && (
+        <div className="border mt-6 w-[700px] h-[400px] ml-[50px]">
           <Image
             src={post.imageUrl}
             width={700}
