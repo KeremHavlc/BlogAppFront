@@ -42,6 +42,8 @@ const AddComments = () => {
       );
       if (!res.ok) {
         toast.error("Veriler yüklenirken bir hata oluştu!");
+      } else if (res.ok) {
+        window.location.reload();
       }
     } catch (error) {
       toast.error("Bir hata oluştu!", error);
