@@ -1,157 +1,200 @@
 import { StarOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import FollowButton from "./FollowButton";
+import { toast } from "react-fox-toast";
 
 const RightBar = () => {
+  const [users, setUsers] = useState([]);
+  const [status, setStatus] = useState({});
+
+  const getUserFromToken = () => {
+    try {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("authToken="))
+        ?.split("=")[1];
+
+      if (!token) return null;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload?.id;
+    } catch (err) {
+      console.error("JWT decode hatası:", err);
+      return null;
+    }
+  };
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch("https://localhost:7291/api/Users/getAll", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await res.json();
+
+        // Rastgele karıştır, ilk 3 kişiyi al
+        const shuffled = data.sort(() => 0.5 - Math.random());
+        const randomUsers = shuffled.slice(0, 3);
+
+        setUsers(randomUsers);
+      } catch (err) {
+        console.error("Kullanıcılar çekilemedi:", err);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+  const checkFriendShips = async (users) => {
+    const senderUserId = getUserFromToken();
+
+    if (!senderUserId) return;
+
+    const statusObj = {};
+
+    for (const user of users) {
+      try {
+        const res = await fetch(
+          `https://localhost:7291/api/FriendShips/check?senderUserId=${senderUserId}&receiverUserId=${user.userId}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (!res.ok) {
+          toast.error("Veriler yüklenirken bir hata oluştu!");
+          continue;
+        }
+        const data = await res.text();
+        if (res.status == 204) {
+          setStatus(null);
+        } else if (res.status == 204) {
+          setStatus(true);
+        }
+        const check = await res.json();
+        statusObj[user.userId] = check;
+      } catch (error) {
+        toast.error("Bir hata oluştu!");
+        statusObj[user.userId] = null;
+      }
+    }
+
+    console.log("Arkadaşlık durumları:", statusObj);
+    setStatus(statusObj);
+  };
+
+  useEffect(() => {
+    if (users.length > 0) {
+      checkFriendShips(users);
+    }
+  }, [users]);
+
   return (
-    <>
-      <div className="w-[300px] h-[700px] bg-white border ml-[95px] mt-[50px] shadow-lg rounded-lg p-6 mr-[95px]">
-        {/* Üst menü: Önerilen Topluluklar */}
-        <div className="space-y-6 select-none">
-          <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
-            <StarOutlined />
-            <h2>Önerilen Topluluklar</h2>
-          </div>
+    <div className="w-[320px] h-[700px] bg-white border ml-[95px] mt-[50px] shadow-lg rounded-lg p-6 mr-[95px]">
+      {/* Önerilen Topluluklar */}
+      <div className="space-y-6 select-none">
+        <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
+          <StarOutlined />
+          <h2>Önerilen Topluluklar</h2>
+        </div>
 
-          {/* Topluluk 1 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                Teknoloji
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>11</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Katıl
-              </button>
+        {/* Statik topluluklar */}
+        {/* Topluluk 1 */}
+        <div className="flex justify-between">
+          <div>
+            <Avatar size={38} icon={<UserOutlined />} />
+          </div>
+          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
+            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
+              Teknoloji
+            </h6>
+            <div className="flex">
+              <TeamOutlined className="text-sm" />
+              <h6>11</h6>
             </div>
           </div>
-
-          {/* Topluluk 2 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                Yazılım Geliştirme
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>20</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Katıl
-              </button>
-            </div>
-          </div>
-
-          {/* Topluluk 3 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                UI/UX Tasarım
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>7</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Katıl
-              </button>
-            </div>
+          <div>
+            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
+              Katıl
+            </button>
           </div>
         </div>
 
-        {/* Ayraç */}
-        <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
-
-        {/* Üst menü: Önerilen Kullanıcılar */}
-        <div className="space-y-6 select-none">
-          <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
-            <UserOutlined />
-            <h2>Önerilen Kullanıcılar</h2>
+        {/* Topluluk 2 */}
+        <div className="flex justify-between">
+          <div>
+            <Avatar size={38} icon={<UserOutlined />} />
           </div>
-
-          {/* Kullanıcı 1 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                John Doe
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>3 Takipçi</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Takip Et
-              </button>
+          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
+            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
+              Yazılım Geliştirme
+            </h6>
+            <div className="flex">
+              <TeamOutlined className="text-sm" />
+              <h6>20</h6>
             </div>
           </div>
+          <div>
+            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
+              Katıl
+            </button>
+          </div>
+        </div>
 
-          {/* Kullanıcı 2 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                Alice Johnson
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>15 Takipçi</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Takip Et
-              </button>
+        {/* Topluluk 3 */}
+        <div className="flex justify-between">
+          <div>
+            <Avatar size={38} icon={<UserOutlined />} />
+          </div>
+          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
+            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
+              UI/UX Tasarım
+            </h6>
+            <div className="flex">
+              <TeamOutlined className="text-sm" />
+              <h6>7</h6>
             </div>
           </div>
-
-          {/* Kullanıcı 3 */}
-          <div className="flex justify-between">
-            <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                Bob Smith
-              </h6>
-              <div className="flex">
-                <TeamOutlined className="text-sm" />
-                <h6>5 Takipçi</h6>
-              </div>
-            </div>
-            <div>
-              <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-                Takip Et
-              </button>
-            </div>
+          <div>
+            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
+              Katıl
+            </button>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Ayraç */}
+      <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
+
+      {/* Önerilen Kullanıcılar */}
+      <div className="space-y-6 select-none">
+        <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
+          <UserOutlined />
+          <h2>Önerilen Kullanıcılar</h2>
+        </div>
+
+        {users.map((user, index) => (
+          <div key={index} className="flex justify-between">
+            <div>
+              <Avatar size={38} icon={<UserOutlined />} />
+            </div>
+            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
+              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
+                {user.username}
+              </h6>
+              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
+                @{user.email}
+              </h6>
+              <div className="flex"></div>
+            </div>
+            <div>
+              <FollowButton user={user} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
