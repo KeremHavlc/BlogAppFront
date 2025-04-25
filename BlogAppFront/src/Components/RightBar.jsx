@@ -1,29 +1,10 @@
-import { StarOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
 import React, { useEffect, useState } from "react";
 import FollowButton from "./FollowButton";
-import { toast } from "react-fox-toast";
+import { StarOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 
 const RightBar = () => {
   const [users, setUsers] = useState([]);
-  const [status, setStatus] = useState({});
-
-  const getUserFromToken = () => {
-    try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("authToken="))
-        ?.split("=")[1];
-
-      if (!token) return null;
-
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload?.id;
-    } catch (err) {
-      console.error("JWT decode hatası:", err);
-      return null;
-    }
-  };
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -33,7 +14,6 @@ const RightBar = () => {
         });
         const data = await res.json();
 
-        // Rastgele karıştır, ilk 3 kişiyi al
         const shuffled = data.sort(() => 0.5 - Math.random());
         const randomUsers = shuffled.slice(0, 3);
 
@@ -45,50 +25,6 @@ const RightBar = () => {
 
     fetchUsers();
   }, []);
-  const checkFriendShips = async (users) => {
-    const senderUserId = getUserFromToken();
-
-    if (!senderUserId) return;
-
-    const statusObj = {};
-
-    for (const user of users) {
-      try {
-        const res = await fetch(
-          `https://localhost:7291/api/FriendShips/check?senderUserId=${senderUserId}&receiverUserId=${user.userId}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        if (!res.ok) {
-          toast.error("Veriler yüklenirken bir hata oluştu!");
-          continue;
-        }
-        const data = await res.text();
-        if (res.status == 204) {
-          setStatus(null);
-        } else if (res.status == 204) {
-          setStatus(true);
-        }
-        const check = await res.json();
-        statusObj[user.userId] = check;
-      } catch (error) {
-        toast.error("Bir hata oluştu!");
-        statusObj[user.userId] = null;
-      }
-    }
-
-    console.log("Arkadaşlık durumları:", statusObj);
-    setStatus(statusObj);
-  };
-
-  useEffect(() => {
-    if (users.length > 0) {
-      checkFriendShips(users);
-    }
-  }, [users]);
 
   return (
     <div className="w-[320px] h-[700px] bg-white border ml-[95px] mt-[50px] shadow-lg rounded-lg p-6 mr-[95px]">
@@ -166,27 +102,24 @@ const RightBar = () => {
 
       {/* Ayraç */}
       <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
-
       {/* Önerilen Kullanıcılar */}
       <div className="space-y-6 select-none">
         <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
-          <UserOutlined />
           <h2>Önerilen Kullanıcılar</h2>
         </div>
 
         {users.map((user, index) => (
           <div key={index} className="flex justify-between">
             <div>
-              <Avatar size={38} icon={<UserOutlined />} />
-            </div>
-            <div className="flex flex-col w-[140px] overflow-hidden ml-4">
               <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {user.username}
               </h6>
-              <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-                @{user.email}
+              <h6 className="whitespace-nowrap overflow-hidden">
+                @
+                {user.email.length > 6
+                  ? user.email.slice(0, 6) + "..."
+                  : user.email}
               </h6>
-              <div className="flex"></div>
             </div>
             <div>
               <FollowButton user={user} />
