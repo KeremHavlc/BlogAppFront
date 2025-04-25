@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserOutlined,
   CalendarOutlined,
@@ -6,12 +6,17 @@ import {
   FileTextOutlined,
 } from "@ant-design/icons";
 import { Avatar } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-fox-toast";
+
 const PostUserInfo = () => {
   const { postId } = useParams();
+  const navigate = useNavigate();
+
   const [data, setData] = useState();
   const [postCount, setPostCount] = useState();
+  const [friends, setFriends] = useState([]); // Arkadaşları tutacak state
+
   const fetchData = async () => {
     try {
       const res = await fetch(
@@ -39,6 +44,7 @@ const PostUserInfo = () => {
         setData(userData);
       }
 
+      // Post count
       const postCount = await fetch(
         `https://localhost:7291/api/Posts/getbyuserid/${postData.userId}`,
         {
@@ -50,13 +56,28 @@ const PostUserInfo = () => {
         const postCountData = await postCount.json();
         setPostCount(postCountData);
       }
+
+      // Arkadaşları al
+      const friendsRes = await fetch(
+        `https://localhost:7291/api/FriendShips/getFriends?userId=${postData.userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (friendsRes.ok) {
+        const friendsData = await friendsRes.json();
+        setFriends(friendsData); // Arkadaşları set et
+      }
     } catch (error) {
       toast.error("Bir hata oluştu!", error);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="w-[300px] h-auto bg-white border mr-[95px] ml-[95px] mt-[50px] shadow-lg rounded-2xl p-6 select-none">
       {/* Kullanıcı Bilgileri */}
@@ -85,7 +106,8 @@ const PostUserInfo = () => {
         )}
         <div className="flex items-center gap-3">
           <TeamOutlined className="text-blue-500 text-lg" />
-          <span>Takip Edilen: 150</span>
+          <span>Arkadaşlar: {friends.length}</span>{" "}
+          {/* Arkadaş sayısını göster */}
         </div>
 
         <div className="flex items-center gap-3">

@@ -51,7 +51,7 @@ const FriendsComponent = () => {
     }
   };
   return (
-    <div className="w-[1000px] h-[700px] border bg-white shadow-lg rounded-2xl p-8 flex flex-col justify-between">
+    <div className="w-[1000px] h-[700px] select-none border bg-white shadow-lg rounded-2xl p-8 flex flex-col">
       <div className="text-2xl font-semibold mb-4">Arkadaşlar</div>
       <div className="overflow-y-auto grid grid-cols-2 gap-4 pr-2">
         {friendShips.length === 0 ? (

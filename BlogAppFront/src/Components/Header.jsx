@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { UserOutlined, BellOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Avatar, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
+import { usePendingRequest } from "../Context/PendingRequestContext ";
 
 const Header = () => {
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
-
-  const pendingRequests = 3;
+  const { pendingCount } = usePendingRequest();
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -53,7 +53,7 @@ const Header = () => {
         onClick={() => navigate(`/pending-requests/${userId}`)}
         className="flex flex-col items-center cursor-pointer pr-4"
       >
-        <Badge count={pendingRequests} size="small" offset={[2, 0]}>
+        <Badge count={pendingCount} size="small" offset={[2, 0]}>
           <Avatar
             size="large"
             icon={<BellOutlined />}
