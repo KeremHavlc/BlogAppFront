@@ -12,7 +12,6 @@ const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -79,19 +78,11 @@ const UserInfo = () => {
         </div>
 
         {/* Kullanıcı İstatistikleri */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-          <div className="flex items-center gap-4 bg-blue-50 border border-blue-200 p-4 rounded-xl hover:shadow-md transition">
-            <FollowerInfo />
-          </div>
-          <div className="flex items-center gap-4 bg-purple-50 border border-purple-200 p-4 rounded-xl hover:shadow-md transition">
-            <AccountOpening accountOpening={userData?.createdAt} />
-          </div>
-          <div className="flex items-center gap-4 bg-indigo-50 border border-indigo-200 p-4 rounded-xl hover:shadow-md transition">
-            <PostInfo />
-          </div>
-          <div className="flex items-center gap-4 bg-pink-50 border border-pink-200 p-4 rounded-xl hover:shadow-md transition">
-            <CommentInfo />
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 select-none cursor-pointer">
+          <FollowerInfo />
+          <AccountOpening accountOpening={userData?.createdAt} />
+          <PostInfo />
+          <CommentInfo />
         </div>
 
         {/* Ayarlar */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HomeOutlined, UserOutlined, StarOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AddPostModal from "./AddPostModal";
@@ -6,6 +6,28 @@ import AddPostModal from "./AddPostModal";
 const LeftBar = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [userData, setUserData] = useState(null);
+  const getUserFromToken = () => {
+    try {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("authToken="))
+        ?.split("=")[1];
+
+      if (!token) return null;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      setUserData(payload?.id);
+      return payload?.id;
+    } catch (err) {
+      console.error("JWT decode hatası:", err);
+      return null;
+    }
+  };
+  useEffect(() => {
+    getUserFromToken();
+  }, []);
 
   return (
     <div className="w-[300px] h-[700px] bg-white border ml-[95px] mt-[50px] shadow-lg rounded-lg p-6">
@@ -25,7 +47,10 @@ const LeftBar = () => {
           <UserOutlined />
           <h2>Profil</h2>
         </div>
-        <div className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer">
+        <div
+          onClick={() => navigate(`/friendships/${userData}`)}
+          className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer"
+        >
           <StarOutlined />
           <h2>Takip Edilenler</h2>
         </div>

@@ -10,7 +10,7 @@ const AccountOpening = ({ accountOpening }) => {
   });
 
   return (
-    <>
+    <div className="flex items-center gap-4 bg-purple-50 border border-purple-200 p-4 rounded-xl hover:shadow-md transition">
       <div className="p-2 bg-purple-100 rounded-full text-purple-600">
         <CalendarOutlined className="text-2xl" />
       </div>
@@ -18,7 +18,7 @@ const AccountOpening = ({ accountOpening }) => {
         <div className="text-md font-semibold">{formatted}</div>
         <div className="text-gray-500 text-sm">Hesap Açılış</div>
       </div>
-    </>
+    </div>
   );
 };
 

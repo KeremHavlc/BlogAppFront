@@ -1,9 +1,12 @@
 import { TeamOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
+import { useNavigate } from "react-router-dom";
 
 const FollowerInfo = () => {
   const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState();
+  const navigate = useNavigate();
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -14,6 +17,7 @@ const FollowerInfo = () => {
       if (!token) return null;
 
       const payload = JSON.parse(atob(token.split(".")[1]));
+      setUserId(payload?.id);
       return payload?.id;
     } catch (err) {
       console.error("JWT decode hatası:", err);
@@ -50,7 +54,10 @@ const FollowerInfo = () => {
   }, []);
 
   return (
-    <>
+    <div
+      onClick={() => navigate(`/friendships/${userId}`)}
+      className="flex items-center gap-4 bg-blue-50 border border-blue-200 p-4 rounded-xl hover:shadow-md transition"
+    >
       <div className="p-2 bg-blue-100 rounded-full text-blue-600">
         <TeamOutlined className="text-2xl" />
       </div>
@@ -58,7 +65,7 @@ const FollowerInfo = () => {
         <div className="text-xl font-semibold">{userData?.length}</div>
         <div className="text-gray-500 text-sm">Arkadaş</div>
       </div>
-    </>
+    </div>
   );
 };
 

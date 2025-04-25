@@ -1,11 +1,34 @@
-import React from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
+import React, { useEffect, useState } from "react";
+import { UserOutlined, BellOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Avatar, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
-import { LogoutOutlined } from "@ant-design/icons";
 
 const Header = () => {
+  const [userId, setUserId] = useState();
   const navigate = useNavigate();
+
+  const pendingRequests = 3;
+  const getUserFromToken = () => {
+    try {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("authToken="))
+        ?.split("=")[1];
+
+      if (!token) return null;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      setUserId(payload?.id);
+      return payload?.id;
+    } catch (err) {
+      console.error("JWT decode hatası:", err);
+      return null;
+    }
+  };
+  useEffect(() => {
+    getUserFromToken();
+  }, []);
+
   return (
     <div className="w-full bg-white shadow-lg py-4 flex items-center justify-between border-b-2 px-8">
       {/* Logo */}
@@ -25,10 +48,25 @@ const Header = () => {
         />
       </div>
 
+      {/* Bekleyen İstekler */}
+      <div
+        onClick={() => navigate(`/pending-requests/${userId}`)}
+        className="flex flex-col items-center cursor-pointer pr-4"
+      >
+        <Badge count={pendingRequests} size="small" offset={[2, 0]}>
+          <Avatar
+            size="large"
+            icon={<BellOutlined />}
+            className="hover:text-red-500"
+          />
+        </Badge>
+        <h2 className="mt-1 text-sm">İstekler</h2>
+      </div>
+
       {/* Profil */}
       <div
         onClick={() => navigate("/profile")}
-        className="w-[200px] flex justify-end pr-16 cursor-pointer"
+        className=" flex justify-end pr-4 cursor-pointer"
       >
         <div className="flex flex-col items-center">
           <Avatar
@@ -36,9 +74,11 @@ const Header = () => {
             icon={<UserOutlined />}
             className="hover:text-red-500"
           />
-          <h2 className="mt-1">Profil</h2>
+          <h2 className="mt-1 text-sm">Profil</h2>
         </div>
       </div>
+
+      {/* Çıkış */}
       <div
         onClick={() => navigate("/login")}
         className="flex flex-col items-center cursor-pointer"
@@ -48,7 +88,7 @@ const Header = () => {
           icon={<LogoutOutlined />}
           className="hover:text-red-500"
         />
-        <h2 className="mt-1">Çıkış</h2>
+        <h2 className="mt-1 text-sm">Çıkış</h2>
       </div>
     </div>
   );

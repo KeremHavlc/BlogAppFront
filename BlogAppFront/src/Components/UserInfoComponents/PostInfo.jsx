@@ -50,7 +50,7 @@ const PostInfo = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex items-center gap-4 bg-indigo-50 border border-indigo-200 p-4 rounded-xl hover:shadow-md transition">
       <div className="p-2 bg-indigo-100 rounded-full text-indigo-600">
         <FileTextOutlined className="text-2xl" />
       </div>
@@ -58,7 +58,7 @@ const PostInfo = () => {
         <div className="text-xl font-semibold">{userData?.length}</div>
         <div className="text-gray-500 text-sm">Gönderi</div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -7,6 +7,8 @@ import ProfilePage from "./Pages/ProfilePage";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
 import { ToastContainer } from "react-fox-toast";
+import FriendShipPage from "./Pages/FriendShipPage";
+import PendingRequestsPage from "./Pages/PendingRequestsPage";
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +20,11 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/friendships/:userId" element={<FriendShipPage />} />
+        <Route
+          path="/pending-requests/:userId"
+          element={<PendingRequestsPage />}
+        />
       </Routes>
     </BrowserRouter>
   );
