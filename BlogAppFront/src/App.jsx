@@ -9,6 +9,7 @@ import RegisterPage from "./Pages/Auth/RegisterPage";
 import { ToastContainer } from "react-fox-toast";
 import FriendShipPage from "./Pages/FriendShipPage";
 import PendingRequestsPage from "./Pages/PendingRequestsPage";
+import SearchUserPage from "./Pages/SearchUserPage";
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/friendships/:userId" element={<FriendShipPage />} />
+        <Route path="/searhcuser/:userId" element={<SearchUserPage />} />
         <Route
           path="/pending-requests/:userId"
           element={<PendingRequestsPage />}

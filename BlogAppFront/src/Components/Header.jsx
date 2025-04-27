@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { UserOutlined, BellOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Avatar, Badge } from "antd";
+import { Avatar, Badge, List, AutoComplete, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { usePendingRequest } from "../Context/PendingRequestContext ";
+import { toast } from "react-fox-toast";
 
 const Header = () => {
+  const [searchUser, setSearchUser] = useState("");
+  const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
   const { pendingCount } = usePendingRequest();
+
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -25,12 +29,51 @@ const Header = () => {
       return null;
     }
   };
+
   useEffect(() => {
     getUserFromToken();
   }, []);
 
+  useEffect(() => {
+    if (searchUser.trim().length === 0) {
+      setUsers([]);
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchData();
+    }, 200);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchUser]);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7291/api/Users/getByUsernameFront?username=${searchUser}`,
+        { method: "GET", credentials: "include" }
+      );
+      if (!res.ok) return;
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setUsers(data);
+      } else {
+        setUsers([]);
+      }
+    } catch (error) {
+      console.error("Kullanıcılar yüklenemedi");
+    }
+  };
+
+  const handleSearch = (value) => {
+    setSearchUser(value);
+  };
+
+  const onSelect = (userId) => {
+    navigate(`/searhcuser/${userId}`);
+  };
   return (
-    <div className="w-full bg-white shadow-lg py-4 flex items-center justify-between border-b-2 px-8">
+    <div className="w-full bg-white shadow-lg py-4 flex items-center justify-between border-b-2 px-8 relative">
       {/* Logo */}
       <div
         onClick={() => navigate("/home")}
@@ -40,12 +83,32 @@ const Header = () => {
       </div>
 
       {/* Arama kutusu */}
-      <div className="flex-grow flex justify-center">
-        <input
-          type="text"
-          className="w-[500px] h-[50px] bg-gray-200 border rounded-xl pl-5"
-          placeholder="Kullanıcı Arayın..."
-        />
+      <div className="flex-grow flex ml-[310px]">
+        <AutoComplete
+          value={searchUser}
+          onSearch={handleSearch}
+          onSelect={onSelect}
+          style={{ width: 800, height: 30 }}
+          options={
+            Array.isArray(users)
+              ? users.map((user) => ({
+                  value: user.id,
+                  label: (
+                    <div className="flex items-center">
+                      <Avatar
+                        size="small"
+                        icon={<UserOutlined />}
+                        className="mr-3"
+                      />
+                      {user.username}
+                    </div>
+                  ),
+                }))
+              : []
+          }
+        >
+          <Input placeholder="Kullanıcı Arayın..." />
+        </AutoComplete>
       </div>
 
       {/* Bekleyen İstekler */}

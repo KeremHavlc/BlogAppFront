@@ -115,13 +115,6 @@ const PostUserInfo = () => {
           <span>Gönderiler: {postCount?.length}</span>
         </div>
       </div>
-
-      {/* Takip Et Butonu */}
-      <div className="mt-6 flex justify-center">
-        <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition font-medium">
-          Takip Et
-        </button>
-      </div>
     </div>
   );
 };
