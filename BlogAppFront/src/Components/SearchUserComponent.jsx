@@ -1,13 +1,16 @@
 import { UserOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
+import SearchUserFollowButon from "./SearchUserFollowButon";
 
 const SearchUserComponent = ({ userId }) => {
   const [userData, setUserData] = useState();
-  const [isFollowing, setIsFollowing] = useState();
+  const [isFollowing, setIsFollowing] = useState(0);
   const [cookieUserId, setCookieUserId] = useState();
+
   const checkFriendShips = async () => {
     try {
+      if (!cookieUserId) return;
       const check = await fetch(
         `https://localhost:7291/api/FriendShips/check?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
         {
@@ -19,11 +22,12 @@ const SearchUserComponent = ({ userId }) => {
         console.log("Veriler Yüklenemedi!");
       }
       const data = await check.json();
-      setIsFollowing(data);
+      setIsFollowing(data.status);
     } catch (error) {
       console.log(error);
     }
   };
+
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -40,6 +44,7 @@ const SearchUserComponent = ({ userId }) => {
       return null;
     }
   };
+
   const fetchData = async () => {
     try {
       const res = await fetch(
@@ -60,17 +65,16 @@ const SearchUserComponent = ({ userId }) => {
     }
   };
 
-  const toggleFollow = () => {
-    // Takip et / takipten çık işlemi
-    setIsFollowing((prevState) => !prevState);
-    toast.success(isFollowing ? "Takipten çıkıldı!" : "Takip edildi!");
-  };
-
   useEffect(() => {
     fetchData();
     getUserFromToken();
-    checkFriendShips();
   }, [userId]);
+
+  useEffect(() => {
+    if (cookieUserId) {
+      checkFriendShips();
+    }
+  }, [cookieUserId, userId]);
 
   return (
     <div className="w-[1000px] h-[700px] border bg-white shadow-lg rounded-2xl p-8 flex flex-col">
@@ -87,18 +91,15 @@ const SearchUserComponent = ({ userId }) => {
 
       {/* Takip Et / Takipten Çık Butonları */}
       <div className="flex gap-4 mt-10">
-        <button
-          onClick={toggleFollow}
-          className={`${
-            isFollowing ? "bg-red-500" : "bg-blue-500"
-          } text-white py-2 px-6 rounded-full transition-colors`}
-        >
-          {isFollowing ? "Takipten Çık" : "Takip Et"}
-        </button>
+        <SearchUserFollowButon
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          cookieUserId={cookieUserId}
+          userId={userId}
+        />
       </div>
 
       {/* Kullanıcının Dahil Olduğu Topluluklar */}
-
       <div className="border-t pt-6 mt-10">
         <h3 className="font-semibold text-lg">Dahil Olduğu Topluluklar:</h3>
         <ul className="mt-4 space-y-2">
