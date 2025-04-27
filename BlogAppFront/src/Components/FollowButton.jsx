@@ -99,7 +99,7 @@ const FollowButton = ({ user }) => {
     <div>
       <button
         onClick={handleClick}
-        className={`${getButtonClass()} text-sm leading-none px-4 py-2 rounded-lg transition font-medium`}
+        className={`${getButtonClass()} text-sm leading-none px-4 py-2 rounded-lg shadow-lg transition font-medium`}
         disabled={status === 1 || status === 2}
       >
         {renderButtonText()}

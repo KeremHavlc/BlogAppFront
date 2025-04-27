@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FollowButton from "./FollowButton";
 import { StarOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+import CommunitiesComponent from "./CommunitiesComponent";
 
 const RightBar = () => {
   const [users, setUsers] = useState([]);
@@ -37,69 +38,10 @@ const RightBar = () => {
 
         {/* Statik topluluklar */}
         {/* Topluluk 1 */}
-        <div className="flex justify-between">
-          <div>
-            <Avatar size={38} icon={<UserOutlined />} />
-          </div>
-          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-              Teknoloji
-            </h6>
-            <div className="flex">
-              <TeamOutlined className="text-sm" />
-              <h6>11</h6>
-            </div>
-          </div>
-          <div>
-            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-              Katıl
-            </button>
-          </div>
-        </div>
-
-        {/* Topluluk 2 */}
-        <div className="flex justify-between">
-          <div>
-            <Avatar size={38} icon={<UserOutlined />} />
-          </div>
-          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-              Yazılım Geliştirme
-            </h6>
-            <div className="flex">
-              <TeamOutlined className="text-sm" />
-              <h6>20</h6>
-            </div>
-          </div>
-          <div>
-            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-              Katıl
-            </button>
-          </div>
-        </div>
-
-        {/* Topluluk 3 */}
-        <div className="flex justify-between">
-          <div>
-            <Avatar size={38} icon={<UserOutlined />} />
-          </div>
-          <div className="flex flex-col w-[140px] overflow-hidden ml-4">
-            <h6 className="text-ellipsis overflow-hidden whitespace-nowrap">
-              UI/UX Tasarım
-            </h6>
-            <div className="flex">
-              <TeamOutlined className="text-sm" />
-              <h6>7</h6>
-            </div>
-          </div>
-          <div>
-            <button className="border w-[75px] h-[40px] decoration-dotted hover:bg-red-400">
-              Katıl
-            </button>
-          </div>
+        <div className="flex flex-col">
+          <CommunitiesComponent />
         </div>
       </div>
-
       {/* Ayraç */}
       <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
       {/* Önerilen Kullanıcılar */}
