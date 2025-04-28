@@ -10,8 +10,7 @@ const CommunitiesComponent = () => {
   const [communityNames, setCommunityNames] = useState({});
   const [cookieUserId, setCookieUserId] = useState(null);
   const [joinedCommunities, setJoinedCommunities] = useState(new Set());
-
-  const getUserFromToken = () => {
+  const getUserFromToken = async () => {
     try {
       const token = document.cookie
         .split("; ")
@@ -90,7 +89,7 @@ const CommunitiesComponent = () => {
         throw new Error("Katılım kontrolü başarısız oldu!");
       }
       const data = await res.json();
-      if (data.success) {
+      if (data.status) {
         setJoinedCommunities((prev) => {
           const updated = new Set(prev);
           updated.add(communityId);
@@ -102,19 +101,22 @@ const CommunitiesComponent = () => {
     }
   };
   useEffect(() => {
-    fetchData();
-    getUserFromToken(); // Buraya almak daha doğru
+    const initialize = async () => {
+      await getUserFromToken();
+      await fetchData();
+    };
+
+    initialize();
   }, []);
 
   useEffect(() => {
     if (top3Communities.length > 0) {
       top3Communities.forEach(([communityId]) => {
         fetchCommunityName(communityId);
-        checkCommunityJoined(communityId); // HER topluluk için kontrol yap
+        checkCommunityJoined(communityId);
       });
     }
   }, [top3Communities, cookieUserId]);
-
   return (
     <>
       {top3Communities.length > 0 ? (

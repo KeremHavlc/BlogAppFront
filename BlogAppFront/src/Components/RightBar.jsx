@@ -35,9 +35,6 @@ const RightBar = () => {
           <StarOutlined />
           <h2>Önerilen Topluluklar</h2>
         </div>
-
-        {/* Statik topluluklar */}
-        {/* Topluluk 1 */}
         <div className="flex flex-col">
           <CommunitiesComponent />
         </div>

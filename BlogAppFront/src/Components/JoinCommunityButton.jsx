@@ -3,22 +3,19 @@ import { toast } from "react-fox-toast";
 
 const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
   const [isJoinedState, setIsJoinedState] = useState(isJoined);
+  const [createdAtState, setCreatedAtState] = useState(null);
 
-  // Dışarıdan gelen isJoined değişirse, içeriği de güncelle
   useEffect(() => {
     setIsJoinedState(isJoined);
   }, [isJoined]);
 
   const handleClick = async () => {
-    const createdAt = new Date().toISOString();
-
     if (isJoinedState) {
-      // Takibi bırak
       try {
         const res = await fetch(
           `https://localhost:7291/api/CommunityUsers/deleteCommunityUser`,
           {
-            method: "POST",
+            method: "DELETE",
             credentials: "include",
             headers: {
               "Content-Type": "application/json",
@@ -26,14 +23,13 @@ const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
             body: JSON.stringify({
               communityId: communityId,
               userId: cookieUserId,
-              createdAt: createdAt,
             }),
           }
         );
 
         if (res.ok) {
           toast.success("Takibi bıraktınız!");
-          setIsJoinedState(false); // Durumu değiştir
+          setIsJoinedState(false);
         } else {
           toast.error("Takibi bırakma başarısız oldu.");
         }
@@ -42,7 +38,8 @@ const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
         toast.error("Takibi bırakırken hata oluştu!");
       }
     } else {
-      // Katıl
+      const newCreatedAt = new Date().toISOString();
+
       try {
         const res = await fetch(
           `https://localhost:7291/api/CommunityUsers/addCommunityUser`,
@@ -55,14 +52,15 @@ const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
             body: JSON.stringify({
               communityId: communityId,
               userId: cookieUserId,
-              createdAt: createdAt,
+              createdAt: newCreatedAt,
             }),
           }
         );
 
         if (res.ok) {
           toast.success("Topluluğa katıldınız!");
-          setIsJoinedState(true); // Durumu değiştir
+          setIsJoinedState(true);
+          setCreatedAtState(newCreatedAt);
         } else {
           toast.error("Topluluğa katılamadınız.");
         }
