@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { HomeOutlined, UserOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  UserOutlined,
+  StarOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AddPostModal from "./AddPostModal";
 
@@ -53,6 +58,13 @@ const LeftBar = () => {
         >
           <StarOutlined />
           <h2>Takip Edilenler</h2>
+        </div>
+        <div
+          onClick={() => navigate(`/communities`)}
+          className="flex font-bold items-center gap-4 text-lg hover:text-red-500 cursor-pointer"
+        >
+          <TeamOutlined />
+          <h2>Topluluklar</h2>
         </div>
       </div>
 

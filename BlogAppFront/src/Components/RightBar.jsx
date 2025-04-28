@@ -3,9 +3,11 @@ import FollowButton from "./FollowButton";
 import { StarOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import CommunitiesComponent from "./CommunitiesComponent";
+import { useNavigate } from "react-router-dom";
 
 const RightBar = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -37,6 +39,12 @@ const RightBar = () => {
         </div>
         <div className="flex flex-col">
           <CommunitiesComponent />
+          <h2
+            onClick={() => navigate("/communities")}
+            className="hover:text-blue-500 hover:underline select-none cursor-pointer w-[100px]"
+          >
+            Tümünü Gör
+          </h2>
         </div>
       </div>
       {/* Ayraç */}
