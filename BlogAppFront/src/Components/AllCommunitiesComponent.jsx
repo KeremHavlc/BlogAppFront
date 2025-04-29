@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Image } from "antd"; // 👈 Image'ı import ettim
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
 
@@ -7,7 +7,7 @@ const AllCommunitiesComponent = () => {
   const [communities, setCommunities] = useState([]);
   const [joinedCommunities, setJoinedCommunities] = useState(new Set());
   const [cookieUserId, setCookieUserId] = useState(null);
-  console.log(communities);
+
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -140,6 +140,7 @@ const AllCommunitiesComponent = () => {
       );
     }
   };
+
   useEffect(() => {
     fetchAllCommunities();
     getUserFromToken();
@@ -152,12 +153,17 @@ const AllCommunitiesComponent = () => {
       });
     }
   }, [cookieUserId, communities]);
-
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("tr-TR", options);
+  };
   return (
     <div className="w-[1000px] h-[700px] select-none border bg-white shadow-lg rounded-2xl p-8 flex flex-col mx-auto">
       <div className="text-2xl font-semibold mb-4">Topluluklar</div>
       <div className="overflow-y-auto grid grid-cols-2 gap-4 pr-2">
         {communities.map((community) => {
+          console.log(community);
           const isJoined = joinedCommunities.has(community.communityId);
           return (
             <div
@@ -165,9 +171,17 @@ const AllCommunitiesComponent = () => {
               className="flex items-center justify-between p-4 border rounded-xl hover:shadow transition"
             >
               <div className="flex items-center gap-4">
-                <Avatar
-                  size="large"
-                  src={community.photoUrl || <UserOutlined />}
+                <Image
+                  width={50}
+                  height={50}
+                  style={{ borderRadius: "50%", objectFit: "cover" }}
+                  src={
+                    community.image
+                      ? `data:image/png;base64,${community.image}`
+                      : undefined
+                  }
+                  fallback={<UserOutlined />}
+                  alt="community"
                 />
                 <div>
                   <div className="font-medium">{community.name}</div>
@@ -175,18 +189,21 @@ const AllCommunitiesComponent = () => {
                     {community.description}
                   </div>
                   <div className="text-gray-400 text-xs">
-                    Oluşturulma Tarihi: {community.createdAt}
+                    Oluşturulma Tarihi: {formatDate(community.createdAt)}
                   </div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button
-                  type="primary"
-                  icon={<CheckOutlined />}
+                <button
+                  className={`border w-[90px] h-[40px] decoration-dotted ${
+                    isJoined
+                      ? "bg-red-500 hover:bg-red-600"
+                      : "bg-green-500 hover:bg-green-600"
+                  } text-white rounded-lg shadow-lg transition-colors duration-300`}
                   onClick={() => handleJoinOrLeave(community.communityId)}
                 >
                   {isJoined ? "Takibi Bırak" : "Katıl"}
-                </Button>
+                </button>
               </div>
             </div>
           );

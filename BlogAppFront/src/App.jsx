@@ -11,6 +11,8 @@ import FriendShipPage from "./Pages/FriendShipPage";
 import PendingRequestsPage from "./Pages/PendingRequestsPage";
 import SearchUserPage from "./Pages/SearchUserPage";
 import CommunitiesPage from "./Pages/CommunitiesPage";
+import AdminLoginPage from "./Pages/AdminPages/AdminLoginPage";
+import AdminHomePage from "./Pages/AdminPages/AdminHomePage";
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +27,9 @@ function App() {
         <Route path="/friendships/:userId" element={<FriendShipPage />} />
         <Route path="/searhcuser/:userId" element={<SearchUserPage />} />
         <Route path="/communities" element={<CommunitiesPage />} />
+        <Route path="/admin" element={<AdminLoginPage />} />
+        <Route path="/adminhome" element={<AdminHomePage />} />
+
         <Route
           path="/pending-requests/:userId"
           element={<PendingRequestsPage />}
