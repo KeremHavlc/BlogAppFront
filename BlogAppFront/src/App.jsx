@@ -13,6 +13,7 @@ import SearchUserPage from "./Pages/SearchUserPage";
 import CommunitiesPage from "./Pages/CommunitiesPage";
 import AdminLoginPage from "./Pages/AdminPages/AdminLoginPage";
 import AdminHomePage from "./Pages/AdminPages/AdminHomePage";
+import AddComunityPage from "./Pages/AdminPages/AddComunityPage";
 function App() {
   return (
     <BrowserRouter>
@@ -29,7 +30,7 @@ function App() {
         <Route path="/communities" element={<CommunitiesPage />} />
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
-
+        <Route path="/addCommunity" element={<AddComunityPage />} />
         <Route
           path="/pending-requests/:userId"
           element={<PendingRequestsPage />}

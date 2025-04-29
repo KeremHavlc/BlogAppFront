@@ -1,9 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminHeader = () => {
+  const navigate = useNavigate();
   return (
     <header className="flex items-center justify-between select-none bg-gray-800 text-white border-b-2 h-[100px] shadow-lg pl-10 pr-10">
-      <h1 className="text-2xl font-bold">Admin Paneli</h1>
+      <h1 onClick={() => navigate("/adminhome")} className="text-2xl font-bold">
+        Admin Paneli
+      </h1>
 
       <div className="flex items-center gap-4">
         <div className="w-[140px] h-auto border shadow-lg bg-white rounded-lg">
