@@ -1,9 +1,14 @@
 import React from "react";
+import AdminHeader from "../../Components/AdminComponent/AdminHeader";
+import AdminLeftBar from "../../Components/AdminComponent/AdminLeftBar";
 
 const AdminHomePage = () => {
   return (
     <>
-      <div>kerem</div>
+      <div>
+        <AdminHeader />
+        <AdminLeftBar />
+      </div>
     </>
   );
 };
