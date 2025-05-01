@@ -9,7 +9,6 @@ import {
   UserOutlined,
   SettingOutlined,
   UnorderedListOutlined,
-  FileTextOutlined,
   AppstoreOutlined,
   PieChartOutlined,
   MessageOutlined,
@@ -48,7 +47,10 @@ const AdminLeftBar = () => {
                 <HiPlusCircle className="text-lg" />
                 Yeni Topluluk Aç
               </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
+              <button
+                onClick={() => navigate("/allCommunity")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
                 <HiViewList className="text-lg" />
                 Toplulukları Listele
               </button>

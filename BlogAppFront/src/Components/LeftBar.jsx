@@ -71,7 +71,7 @@ const LeftBar = () => {
       {/* Ayraç */}
       <div className="border-t border-gray-300 w-[250px] my-10 select-none" />
 
-      <div className="flex justify-center mt-[400px]">
+      <div className="flex justify-center mt-[370px]">
         <button
           className="w-[180px] h-[45px] bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-md transition-all duration-200"
           onClick={() => setModalOpen(true)}
@@ -85,7 +85,6 @@ const LeftBar = () => {
         onClose={() => setModalOpen(false)}
         onSubmit={(data) => {
           console.log("Gönderilen data:", data);
-          // Backend'e gönderme işlemleri buraya
         }}
       />
     </div>

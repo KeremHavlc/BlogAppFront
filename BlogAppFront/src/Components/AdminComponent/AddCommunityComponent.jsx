@@ -7,7 +7,6 @@ const AddCommunityComponent = () => {
   const [imageBase64, setImageBase64] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -30,26 +29,22 @@ const AddCommunityComponent = () => {
       return;
     }
 
-    const data = {
-      communityDto: {
-        communityId: uuidv4(),
-        image: imageBase64,
-        name,
-        description,
-        createdAt: new Date().toISOString(),
-      },
-    };
-    console.log("Data gönderiliyor:", JSON.stringify(data));
     try {
       const response = await fetch(
         "https://localhost:7291/api/Communities/addCommunity",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
-          body: JSON.stringify(data),
+          body: JSON.stringify({
+            communityId: uuidv4(),
+            image: imageBase64,
+            name,
+            description,
+            createdAt: new Date().toISOString(),
+          }),
         }
       );
 

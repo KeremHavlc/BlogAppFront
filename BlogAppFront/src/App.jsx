@@ -14,6 +14,7 @@ import CommunitiesPage from "./Pages/CommunitiesPage";
 import AdminLoginPage from "./Pages/AdminPages/AdminLoginPage";
 import AdminHomePage from "./Pages/AdminPages/AdminHomePage";
 import AddComunityPage from "./Pages/AdminPages/AddComunityPage";
+import AllCommunitYPage from "./Pages/AdminPages/AllCommunitYPage";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
         <Route path="/addCommunity" element={<AddComunityPage />} />
+        <Route path="/allCommunity" element={<AllCommunitYPage />} />
         <Route
           path="/pending-requests/:userId"
           element={<PendingRequestsPage />}
