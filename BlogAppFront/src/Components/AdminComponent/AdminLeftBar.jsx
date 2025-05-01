@@ -79,6 +79,13 @@ const AdminLeftBar = () => {
                 <UnorderedListOutlined className="text-lg" />
                 Kullanıcı Listesi
               </button>
+              <button
+                onClick={() => navigate("/postById")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
+                <UserOutlined className="text-lg" />
+                Kullanıcı Paylaşımları
+              </button>
             </div>
           )}
         </div>
