@@ -54,10 +54,6 @@ const AdminLeftBar = () => {
                 <HiViewList className="text-lg" />
                 Toplulukları Listele
               </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
-                <HiCog className="text-lg" />
-                Topluluk Ayarları
-              </button>
             </div>
           )}
         </div>
@@ -76,13 +72,12 @@ const AdminLeftBar = () => {
           </button>
           {openSubMenu === "kullanici" && (
             <div className="submenu pl-6 mt-2">
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
+              <button
+                onClick={() => navigate("/allUser")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
                 <UnorderedListOutlined className="text-lg" />
                 Kullanıcı Listesi
-              </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
-                <SettingOutlined className="text-lg" />
-                Kullanıcı Ayarları
               </button>
             </div>
           )}
