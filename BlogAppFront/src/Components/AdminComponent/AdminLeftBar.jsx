@@ -129,15 +129,24 @@ const AdminLeftBar = () => {
           </button>
           {openSubMenu === "istatistik" && (
             <div className="submenu pl-6 mt-2">
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
+              <button
+                onClick={() => navigate("/userstatistics")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
                 <UserOutlined className="text-lg" />
                 Kullanıcı İstatistikleri
               </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
+              <button
+                onClick={() => navigate("/communitystatistics")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
                 <AppstoreOutlined className="text-lg" />
                 Topluluk İstatistikleri
               </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
+              <button
+                onClick={() => navigate("/poststatistics")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
                 <PieChartOutlined className="text-lg" />
                 Gönderi İstatistikleri
               </button>
