@@ -97,13 +97,12 @@ const AdminLeftBar = () => {
           </button>
           {openSubMenu === "gonderi" && (
             <div className="submenu pl-6 mt-2">
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
-                <MessageOutlined className="text-lg" />
+              <button
+                onClick={() => navigate("/allPost")}
+                className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2"
+              >
+                <UnorderedListOutlined className="text-lg" />
                 Gönderileri Listele
-              </button>
-              <button className="submenu-item p-2 hover:bg-gray-700 rounded-md font-medium transition duration-200 flex items-center gap-2">
-                <SettingOutlined className="text-lg" />
-                Gönderi Ayarları
               </button>
             </div>
           )}
