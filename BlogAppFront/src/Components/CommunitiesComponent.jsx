@@ -2,7 +2,7 @@ import { TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
-import JoinCommunityButton from "./JoinCommunityButton"; // Butonu import ediyoruz
+import JoinCommunityButton from "./JoinCommunityButton";
 
 const CommunitiesComponent = () => {
   const [count, setCount] = useState([]);
@@ -10,6 +10,7 @@ const CommunitiesComponent = () => {
   const [communityNames, setCommunityNames] = useState({});
   const [cookieUserId, setCookieUserId] = useState(null);
   const [joinedCommunities, setJoinedCommunities] = useState(new Set());
+
   const getUserFromToken = async () => {
     try {
       const token = document.cookie
@@ -69,7 +70,10 @@ const CommunitiesComponent = () => {
       const data = await res.json();
       setCommunityNames((prev) => ({
         ...prev,
-        [communityId]: data.name,
+        [communityId]: {
+          name: data.name,
+          image: data.image,
+        },
       }));
     } catch (error) {
       console.log(error);
@@ -100,6 +104,7 @@ const CommunitiesComponent = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const initialize = async () => {
       await getUserFromToken();
@@ -117,23 +122,32 @@ const CommunitiesComponent = () => {
       });
     }
   }, [top3Communities, cookieUserId]);
+
   return (
     <>
       {top3Communities.length > 0 ? (
         top3Communities.map(([communityId, userCount]) => {
-          const communityName = communityNames[communityId];
+          const community = communityNames[communityId];
           const isJoined = joinedCommunities.has(communityId);
+          const imageSrc = community?.image
+            ? `data:image/jpeg;base64,${community.image}`
+            : null;
+
           return (
             <div
               key={communityId}
               className="community-card flex justify-between items-center mb-4 p-2 border rounded-lg shadow-md"
             >
               <div>
-                <Avatar size={38} icon={<UserOutlined />} />
+                <Avatar
+                  size={38}
+                  src={imageSrc}
+                  icon={!imageSrc && <UserOutlined />}
+                />
               </div>
               <div className="flex flex-col w-[140px] overflow-hidden ml-4">
                 <h6 className="text-ellipsis overflow-hidden whitespace-nowrap font-semibold">
-                  {communityName || "Yükleniyor..."}
+                  {community?.name || "Yükleniyor..."}
                 </h6>
                 <div className="flex items-center gap-1">
                   <TeamOutlined className="text-sm" />

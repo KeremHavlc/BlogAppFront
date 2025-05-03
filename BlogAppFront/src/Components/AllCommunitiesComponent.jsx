@@ -2,12 +2,13 @@ import { CheckOutlined, CloseOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Image } from "antd"; // 👈 Image'ı import ettim
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
+import { useNavigate } from "react-router-dom";
 
 const AllCommunitiesComponent = () => {
   const [communities, setCommunities] = useState([]);
   const [joinedCommunities, setJoinedCommunities] = useState(new Set());
   const [cookieUserId, setCookieUserId] = useState(null);
-
+  const navigate = useNavigate();
   const getUserFromToken = () => {
     try {
       const token = document.cookie
@@ -167,8 +168,9 @@ const AllCommunitiesComponent = () => {
           const isJoined = joinedCommunities.has(community.communityId);
           return (
             <div
+              onClick={() => navigate(`/community/${community.communityId}`)}
               key={community.communityId}
-              className="flex items-center justify-between p-4 border rounded-xl hover:shadow transition"
+              className="flex items-center justify-between cursor-pointer p-4 border rounded-xl hover:shadow transition"
             >
               <div className="flex items-center gap-4">
                 <Image
