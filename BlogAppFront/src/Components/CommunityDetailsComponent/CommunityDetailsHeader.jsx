@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Image } from "antd";
+import CreatePostButton from "./CreatePostButton";
+import JoinCommunityButton from "./JoinCommunityButton";
 
 const CommunityDetailsHeader = () => {
   const { communityId } = useParams();
@@ -44,7 +46,6 @@ const CommunityDetailsHeader = () => {
             className="w-full h-full object-cover"
           />
         )}
-        {/* Blur overlay */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       </div>
 
@@ -65,7 +66,6 @@ const CommunityDetailsHeader = () => {
             mask: <span style={{ color: "white" }}>Büyüt</span>,
           }}
         />
-
         <div>
           <h1 className="text-2xl font-bold text-gray-800">
             {community?.name}
@@ -76,8 +76,11 @@ const CommunityDetailsHeader = () => {
         </div>
       </div>
 
-      {/* Alt boşluk */}
-      <div className="h-[20px] bg-black" />
+      {/* Alt boşluk ve butonlar */}
+      <div className="h-[60px] bg-white flex items-center justify-end gap-4 px-6">
+        <CreatePostButton />
+        <JoinCommunityButton />
+      </div>
     </div>
   );
 };

@@ -168,11 +168,13 @@ const AllCommunitiesComponent = () => {
           const isJoined = joinedCommunities.has(community.communityId);
           return (
             <div
-              onClick={() => navigate(`/community/${community.communityId}`)}
               key={community.communityId}
               className="flex items-center justify-between cursor-pointer p-4 border rounded-xl hover:shadow transition"
             >
-              <div className="flex items-center gap-4">
+              <div
+                onClick={() => navigate(`/community/${community.communityId}`)}
+                className="flex items-center gap-4"
+              >
                 <Image
                   width={50}
                   height={50}
