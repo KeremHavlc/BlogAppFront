@@ -76,7 +76,7 @@ const CommunityPostsComponent = () => {
         >
           {/* Üst Bilgi */}
           <div
-            onClick={() => navigate(`/community/${communityId}/${post.id}`)}
+            onClick={() => navigate(`/community/${communityId}/${post.postId}`)}
             className="mt-[20px] ml-[19px] flex justify-between"
           >
             <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ const CommunityPostsComponent = () => {
 
           {/* Başlık */}
           <div
-            onClick={() => navigate(`/community/${communityId}/${post.id}`)}
+            onClick={() => navigate(`/community/${communityId}/${post.postId}`)}
             className="mt-[20px]"
           >
             <div className="w-[700px] ml-[50px]">
@@ -102,7 +102,9 @@ const CommunityPostsComponent = () => {
           {/* Butonlar */}
           <div className="flex items-center gap-6 mt-4 ml-[50px] mb-4">
             <button
-              onClick={() => navigate(`/community/${communityId}/${post.id}`)}
+              onClick={() =>
+                navigate(`/community/${communityId}/${post.postId}`)
+              }
               className="flex items-center gap-1 text-gray-700 hover:text-red-600 transition"
             >
               <MessageOutlined className="text-xl" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Modal, Form, Input } from "antd";
 import { toast } from "react-fox-toast";
 import { useParams } from "react-router-dom";
 
@@ -24,20 +24,17 @@ const CreatePostButton = () => {
     }
   };
 
-  // Modal açma işlemi
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  // Modal kapama işlemi
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  // Gönderi oluşturma işlemi
   const handleCreatePost = async () => {
     try {
-      const values = await form.validateFields(); // Formu doğrula
+      const values = await form.validateFields();
 
       const postData = {
         title: values.title,
@@ -47,7 +44,6 @@ const CreatePostButton = () => {
         createdAt: new Date().toISOString(),
       };
 
-      // Gönderi oluşturma isteği
       const res = await fetch(
         "https://localhost:7291/api/CommunityPosts/addCommunityPost",
         {
@@ -61,8 +57,9 @@ const CreatePostButton = () => {
 
       if (res.ok) {
         toast.success("Gönderi başarıyla oluşturuldu!");
-        setIsModalVisible(false); // Modal'ı kapat
-        form.resetFields(); // Formu sıfırla
+        setIsModalVisible(false);
+        form.resetFields();
+        window.location.reload();
       } else {
         toast.error("Gönderi oluşturulurken bir hata oluştu!");
       }
