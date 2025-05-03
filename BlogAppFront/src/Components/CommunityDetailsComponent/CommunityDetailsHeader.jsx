@@ -36,7 +36,7 @@ const CommunityDetailsHeader = () => {
   }, [communityId]);
 
   return (
-    <div className="w-[1000px] mx-auto relative rounded-2xl overflow-hidden shadow-xl select-none">
+    <div className="w-[1000px] ml-[120px] mt-[30px] relative rounded-2xl overflow-hidden shadow-xl select-none">
       {/* Banner arka plan */}
       <div className="relative h-[200px] bg-gray-200">
         {community?.image && (

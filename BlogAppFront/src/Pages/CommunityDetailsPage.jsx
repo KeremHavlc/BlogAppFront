@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Components/Header";
 import LeftBar from "../Components/LeftBar";
 import CommunityDetailsHeader from "../Components/CommunityDetailsComponent/CommunityDetailsHeader";
+import CommunityPostsComponent from "../Components/CommunityDetailsComponent/CommunityPostsComponent";
 
 const CommunityDetailsPage = () => {
   return (
@@ -18,8 +19,11 @@ const CommunityDetailsPage = () => {
           <div className="sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
             <LeftBar />
           </div>
-          <div className="ml-[145px] mt-[50px]">
+
+          {/* Kaydırılabilir Ana içerik alanı */}
+          <div className="flex-1 p-6 overflow-y-auto h-[calc(100vh-64px)]">
             <CommunityDetailsHeader />
+            <CommunityPostsComponent />
           </div>
         </div>
       </div>

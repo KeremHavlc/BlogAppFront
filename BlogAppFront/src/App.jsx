@@ -22,6 +22,7 @@ import UserStatisticsPage from "./Pages/AdminPages/UserStatisticsPage";
 import CommunityStatisticsPage from "./Pages/AdminPages/CommunityStatisticsPage";
 import PostStatisticsPage from "./Pages/AdminPages/PostStatisticsPage";
 import CommunityDetailsPage from "./Pages/CommunityDetailsPage";
+import CommunityPostDetailsPage from "./Pages/CommunityPostDetailsPage";
 function App() {
   return (
     <BrowserRouter>
@@ -48,6 +49,10 @@ function App() {
         <Route
           path="/community/:communityId"
           element={<CommunityDetailsPage />}
+        />
+        <Route
+          path="/community/:communityId/:postId"
+          element={<CommunityPostDetailsPage />}
         />
         <Route
           path="/communityStatistics"
