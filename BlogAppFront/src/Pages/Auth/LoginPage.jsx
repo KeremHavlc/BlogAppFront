@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-fox-toast";
+import logo from "../../Utilities/logo.png";
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -35,7 +37,9 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen select-none flex flex-col items-center justify-center bg-gradient-to-br from-red-400 to-pink-500 px-4">
-      <div className="font-GF text-8xl mb-10 text-white">LOGO</div>
+      <div className="font-GF text-8xl mb-10 text-white">
+        <img src={logo} alt="" className="w-32 h-auto rounded-xl shadow-xl" />
+      </div>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 space-y-6">
         <h2 className="font-GF text-3xl font-bold text-center text-gray-800">
           Giriş Yap

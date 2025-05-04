@@ -2,31 +2,13 @@ import { UserOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
 import SearchUserFollowButon from "./SearchUserFollowButon";
+import { Avatar } from "antd";
 
 const SearchUserComponent = ({ userId }) => {
   const [userData, setUserData] = useState();
   const [isFollowing, setIsFollowing] = useState(0);
   const [cookieUserId, setCookieUserId] = useState();
-
-  const checkFriendShips = async () => {
-    try {
-      if (!cookieUserId) return;
-      const check = await fetch(
-        `https://localhost:7291/api/FriendShips/check?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      if (!check.ok) {
-        console.log("Veriler Yüklenemedi!");
-      }
-      const data = await check.json();
-      setIsFollowing(data.status);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [userCommunities, setUserCommunities] = useState([]);
 
   const getUserFromToken = () => {
     try {
@@ -41,11 +23,10 @@ const SearchUserComponent = ({ userId }) => {
       setCookieUserId(payload?.id);
     } catch (err) {
       console.error("JWT decode hatası:", err);
-      return null;
     }
   };
 
-  const fetchData = async () => {
+  const fetchUser = async () => {
     try {
       const res = await fetch(
         `https://localhost:7291/api/Users/getByIdFront?id=${userId}`,
@@ -61,13 +42,49 @@ const SearchUserComponent = ({ userId }) => {
         toast.error("Veriler yüklenirken bir hata oluştu!");
       }
     } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchCommunities = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7291/api/CommunityUsers/getById?userId=${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setUserCommunities(data);
+      }
+    } catch (error) {
+      console.error("Topluluklar yüklenemedi", error);
+    }
+  };
+
+  const checkFriendShips = async () => {
+    try {
+      if (!cookieUserId) return;
+      const check = await fetch(
+        `https://localhost:7291/api/FriendShips/check?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const data = await check.json();
+      setIsFollowing(data.status);
+    } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchData();
     getUserFromToken();
+    fetchUser();
+    fetchCommunities();
   }, [userId]);
 
   useEffect(() => {
@@ -89,7 +106,7 @@ const SearchUserComponent = ({ userId }) => {
         </div>
       </div>
 
-      {/* Takip Et / Takipten Çık Butonları */}
+      {/* Takip Et / Takipten Çık */}
       <div className="flex gap-4 mt-10">
         <SearchUserFollowButon
           isFollowing={isFollowing}
@@ -99,16 +116,27 @@ const SearchUserComponent = ({ userId }) => {
         />
       </div>
 
-      {/* Kullanıcının Dahil Olduğu Topluluklar */}
+      {/* Dahil Olduğu Topluluklar */}
       <div className="border-t pt-6 mt-10">
-        <h3 className="font-semibold text-lg">Dahil Olduğu Topluluklar:</h3>
-        <ul className="mt-4 space-y-2">
-          <li className="bg-gray-100 p-4 rounded-xl">deneme</li>
+        <h3 className="font-semibold text-lg mb-4">
+          Dahil Olduğu Topluluklar:
+        </h3>
+        <ul className="flex gap-4 flex-wrap">
+          {userCommunities.map((community) => (
+            <li
+              key={community.communityId}
+              className="flex items-center gap-2 bg-gray-100 p-2 rounded-lg"
+            >
+              <Avatar
+                size={40}
+                src={`data:image/jpeg;base64,${community.image}`}
+                className="border"
+              />
+              <span className="font-medium">{community.name}</span>
+            </li>
+          ))}
         </ul>
       </div>
-
-      {/* Ayarlar */}
-      <div className="mt-10 border-t pt-6 flex justify-between items-center"></div>
     </div>
   );
 };

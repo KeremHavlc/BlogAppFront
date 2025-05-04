@@ -23,6 +23,7 @@ import CommunityStatisticsPage from "./Pages/AdminPages/CommunityStatisticsPage"
 import PostStatisticsPage from "./Pages/AdminPages/PostStatisticsPage";
 import CommunityDetailsPage from "./Pages/CommunityDetailsPage";
 import CommunityPostDetailsPage from "./Pages/CommunityPostDetailsPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 function App() {
   return (
     <BrowserRouter>
@@ -62,6 +63,7 @@ function App() {
           path="/pending-requests/:userId"
           element={<PendingRequestsPage />}
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

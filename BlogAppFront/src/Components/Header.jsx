@@ -4,7 +4,7 @@ import { Avatar, Badge, List, AutoComplete, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { usePendingRequest } from "../Context/PendingRequestContext ";
 import { toast } from "react-fox-toast";
-
+import logo from "../Utilities/logo-transparent.png";
 const Header = () => {
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState([]);
@@ -77,9 +77,10 @@ const Header = () => {
       {/* Logo */}
       <div
         onClick={() => navigate("/home")}
-        className="w-[200px] select-none cursor-pointer flex items-center justify-start pl-16 text-4xl text-red-600 font-bold"
+        className="select-none cursor-pointer flex items-center justify-start pl-16 text-4xl text-red-600 font-bold"
+        style={{ height: "60px" }} // Header'ın yüksekliğini koruyarak logoyu büyütüyoruz
       >
-        LOGO
+        <img src={logo} style={{ width: "100px", height: "auto" }} />
       </div>
 
       {/* Arama kutusu */}
