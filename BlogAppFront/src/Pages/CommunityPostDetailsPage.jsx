@@ -3,6 +3,7 @@ import Header from "../Components/Header";
 import LeftBar from "../Components/LeftBar";
 import CommunityDetailsHeader from "../Components/CommunityDetailsComponent/CommunityDetailsHeader";
 import CommunityPostDetailsComponent from "../Components/CommunityDetailsComponent/CommunityPostDetailsComponent";
+import CommunityPostAllComments from "../Components/CommunityDetailsComponent/CommunityPostAllComments";
 
 const CommunityPostDetailsPage = () => {
   return (
@@ -24,6 +25,7 @@ const CommunityPostDetailsPage = () => {
           <div className="flex-1 p-6 overflow-y-auto h-[calc(100vh-64px)]">
             <CommunityDetailsHeader />
             <CommunityPostDetailsComponent />
+            <CommunityPostAllComments />
           </div>
         </div>
       </div>
