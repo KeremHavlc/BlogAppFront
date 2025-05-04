@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Components/Header";
 import LeftBar from "../Components/LeftBar";
 import CommunityDetailsHeader from "../Components/CommunityDetailsComponent/CommunityDetailsHeader";
+import CommunityPostDetailsComponent from "../Components/CommunityDetailsComponent/CommunityPostDetailsComponent";
 
 const CommunityPostDetailsPage = () => {
   return (
@@ -22,6 +23,7 @@ const CommunityPostDetailsPage = () => {
           {/* Kaydırılabilir Ana içerik alanı */}
           <div className="flex-1 p-6 overflow-y-auto h-[calc(100vh-64px)]">
             <CommunityDetailsHeader />
+            <CommunityPostDetailsComponent />
           </div>
         </div>
       </div>
