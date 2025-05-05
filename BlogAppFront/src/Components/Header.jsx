@@ -144,7 +144,7 @@ const Header = () => {
 
       {/* Çıkış */}
       <div
-        onClick={() => navigate("/login")}
+        onClick={() => navigate("/")}
         className="flex flex-col items-center cursor-pointer"
       >
         <Avatar
