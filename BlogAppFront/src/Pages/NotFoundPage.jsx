@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import notFoundImage from "../utilities/notfound.png";
+
 import logo from "../Utilities/horizontal.png";
 
 const NotFoundPage = () => {
@@ -10,7 +10,6 @@ const NotFoundPage = () => {
       <img src={logo} alt="Logo" className="" />
 
       {/* Not Found Image */}
-      <img src={notFoundImage} alt="Not Found" className="w-96 h-auto mb-8" />
 
       <p className="text-2xl text-gray-600 mb-6">
         Üzgünüz, aradığınız sayfa bulunamadı.
