@@ -50,7 +50,9 @@ const Header = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Users/getByUsernameFront?username=${searchUser}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Users/getByUsernameFront?username=${searchUser}`,
         { method: "GET", credentials: "include" }
       );
       if (!res.ok) return;

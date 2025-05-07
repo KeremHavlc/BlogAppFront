@@ -7,9 +7,12 @@ const AllPostComponent = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://localhost:7291/api/Posts/getall", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Posts/getall`,
+        {
+          credentials: "include",
+        }
+      );
       if (!response.ok) throw new Error("Postlar çekilemedi");
       const data = await response.json();
       setPosts(data);

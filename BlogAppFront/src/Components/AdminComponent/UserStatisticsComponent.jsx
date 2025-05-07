@@ -28,9 +28,12 @@ const UserStatisticsComponent = () => {
 
   const fetchUserStats = async () => {
     try {
-      const response = await fetch("https://localhost:7291/api/Users/getAll", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Users/getAll`,
+        {
+          credentials: "include",
+        }
+      );
       if (!response.ok) throw new Error("Kullanıcılar çekilemedi.");
       const users = await response.json();
 

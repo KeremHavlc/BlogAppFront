@@ -45,7 +45,9 @@ const CreatePostButton = () => {
       };
 
       const res = await fetch(
-        "https://localhost:7291/api/CommunityPosts/addCommunityPost",
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityPosts/addCommunityPost`,
         {
           method: "POST",
           headers: {

@@ -11,10 +11,13 @@ const RightBar = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("https://localhost:7291/api/Users/getAll", {
-          method: "GET",
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/api/Users/getAll`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         const data = await res.json();
 
         const shuffled = data.sort(() => 0.5 - Math.random());

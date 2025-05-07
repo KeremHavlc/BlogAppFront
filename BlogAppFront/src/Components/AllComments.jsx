@@ -11,7 +11,7 @@ const AllComments = () => {
   const fetchUsername = async (userId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Users/getById?id=${userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Users/getById?id=${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -29,7 +29,9 @@ const AllComments = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Comments/getbypostid/${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Comments/getbypostid/${postId}`,
         {
           method: "GET",
           credentials: "include",

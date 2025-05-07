@@ -13,7 +13,9 @@ const CommunityPostDetailsComponent = () => {
   const fetchPost = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityPosts/getById?postId=${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityPosts/getById?postId=${postId}`,
         {
           method: "GET",
           credentials: "include",
@@ -33,7 +35,7 @@ const CommunityPostDetailsComponent = () => {
   const fetchUser = async (userId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Users/getById?id=${userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Users/getById?id=${userId}`,
         {
           method: "GET",
           credentials: "include",

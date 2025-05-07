@@ -23,7 +23,9 @@ const PostDetailsComponent = () => {
     try {
       // Post verilerini çek
       const postRes = await fetch(
-        `https://localhost:7291/api/Posts/getBypostId?postId=${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Posts/getBypostId?postId=${postId}`,
         {
           method: "GET",
           credentials: "include",
@@ -40,7 +42,9 @@ const PostDetailsComponent = () => {
 
       // Kullanıcı verilerini çek
       const userRes = await fetch(
-        `https://localhost:7291/api/Users/getById?id=${postData.userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Users/getById?id=${
+          postData.userId
+        }`,
         {
           method: "GET",
           credentials: "include",
@@ -55,7 +59,9 @@ const PostDetailsComponent = () => {
 
       // Beğeni verilerini çek
       const likeRes = await fetch(
-        `https://localhost:7291/api/PostLikes/getAllPostLikes?postId=${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/PostLikes/getAllPostLikes?postId=${postId}`,
         {
           method: "GET",
           credentials: "include",
@@ -69,7 +75,9 @@ const PostDetailsComponent = () => {
 
       // Kullanıcının beğenip beğenmediğini kontrol et
       const isLikedRes = await fetch(
-        `https://localhost:7291/api/PostLikes/isLiked?postId=${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/PostLikes/isLiked?postId=${postId}`,
         {
           method: "GET",
           credentials: "include",
@@ -113,8 +121,12 @@ const PostDetailsComponent = () => {
   const handleLike = async () => {
     try {
       const endpoint = liked
-        ? `https://localhost:7291/api/PostLikes/removeLike?postId=${postId}`
-        : `https://localhost:7291/api/PostLikes/addLike?postId=${postId}`;
+        ? `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/PostLikes/removeLike?postId=${postId}`
+        : `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/PostLikes/addLike?postId=${postId}`;
 
       const method = liked ? "DELETE" : "POST";
 

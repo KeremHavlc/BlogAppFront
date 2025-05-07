@@ -36,7 +36,9 @@ const UserInfo = () => {
     }
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Users/getByUsername?username=${username}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Users/getByUsername?username=${username}`,
         {
           method: "GET",
           credentials: "include",

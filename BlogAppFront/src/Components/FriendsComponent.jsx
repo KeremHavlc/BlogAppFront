@@ -11,7 +11,9 @@ const FriendsComponent = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/getFriends?userId=${userId}`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/getFriends?userId=${userId}`
       );
       if (!res.ok) {
         toast.error("Veriler yüklenemedi!");
@@ -30,7 +32,9 @@ const FriendsComponent = () => {
   const handleRemoveFriend = async (receiverUserId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/removeFriend?receiverUserId=${receiverUserId}&senderUserId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/removeFriend?receiverUserId=${receiverUserId}&senderUserId=${userId}`,
         {
           method: "DELETE",
           credentials: "include",

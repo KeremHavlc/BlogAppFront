@@ -9,14 +9,20 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const onFinish = async (values) => {
     try {
-      const res = await fetch("https://localhost:7291/api/Auths/login", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(values),
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-      });
+      // .env'deki base URL'i kullan
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Auths/login`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify(values),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+        }
+      );
+
       if (!res.ok) {
         const data = await res.text();
         if (data.message) {
@@ -26,6 +32,7 @@ const LoginPage = () => {
         }
         return;
       }
+
       const data = await res.json();
       const token = data.accessToken;
       navigate("/home");

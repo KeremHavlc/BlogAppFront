@@ -27,7 +27,9 @@ const AddComments = () => {
     const userId = getUserFromToken();
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Comments/add?userId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Comments/add?userId=${userId}`,
         {
           method: "POST",
           credentials: "include",

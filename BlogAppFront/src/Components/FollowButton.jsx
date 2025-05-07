@@ -11,7 +11,11 @@ const FollowButton = ({ user }) => {
 
       try {
         const res = await fetch(
-          `https://localhost:7291/api/FriendShips/check?senderUserId=${senderUserId}&receiverUserId=${user.userId}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/FriendShips/check?senderUserId=${senderUserId}&receiverUserId=${
+            user.userId
+          }`,
           {
             method: "GET",
             credentials: "include",
@@ -59,7 +63,11 @@ const FollowButton = ({ user }) => {
     }
     try {
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/addFriend?receiverUserId=${user.userId}&senderUserId=${senderUserId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/addFriend?receiverUserId=${
+          user.userId
+        }&senderUserId=${senderUserId}`,
         {
           method: "POST",
           credentials: "include",

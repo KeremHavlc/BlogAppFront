@@ -13,7 +13,9 @@ const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
     if (isJoinedState) {
       try {
         const res = await fetch(
-          `https://localhost:7291/api/CommunityUsers/deleteCommunityUser`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/CommunityUsers/deleteCommunityUser`,
           {
             method: "DELETE",
             credentials: "include",
@@ -42,7 +44,9 @@ const JoinCommunityButton = ({ isJoined, communityId, cookieUserId }) => {
 
       try {
         const res = await fetch(
-          `https://localhost:7291/api/CommunityUsers/addCommunityUser`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/CommunityUsers/addCommunityUser`,
           {
             method: "POST",
             credentials: "include",

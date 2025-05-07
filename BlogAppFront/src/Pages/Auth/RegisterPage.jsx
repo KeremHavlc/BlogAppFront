@@ -20,16 +20,19 @@ const RegisterPage = () => {
 
     try {
       // POST isteği gönderiyoruz
-      const res = await fetch("https://localhost:7291/api/Auths/register", {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          username,
-          password,
-          roleId,
-        }),
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Auths/register`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            username,
+            password,
+            roleId,
+          }),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+        }
+      );
 
       const data = await res.text();
       console.log(data);

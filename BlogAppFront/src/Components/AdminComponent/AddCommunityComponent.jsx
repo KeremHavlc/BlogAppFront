@@ -31,7 +31,7 @@ const AddCommunityComponent = () => {
 
     try {
       const response = await fetch(
-        "https://localhost:7291/api/Communities/addCommunity",
+        `${import.meta.env.VITE_API_BASE_URL}/api/Communities/addCommunity`,
         {
           method: "POST",
           credentials: "include",

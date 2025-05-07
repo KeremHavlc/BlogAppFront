@@ -11,7 +11,9 @@ const CommunityDetailsHeader = () => {
   const fetchCommunityById = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Communities/getCommunityById?id=${communityId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Communities/getCommunityById?id=${communityId}`,
         {
           method: "GET",
           credentials: "include",
@@ -50,7 +52,7 @@ const CommunityDetailsHeader = () => {
       </div>
 
       {/* İçerik kısmı */}
-      <div className="absolute bottom-[10px] left-10 flex items-center gap-4 bg-gray-200 rounded-xl px-6 py-4 shadow-lg">
+      <div className="absolute bottom-[10px] left-4 flex items-center gap-4 bg-gray-200 rounded-xl px-6 py-4 shadow-lg">
         <Image
           width={80}
           height={80}

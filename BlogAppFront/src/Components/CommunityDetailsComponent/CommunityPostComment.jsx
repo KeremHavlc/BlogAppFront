@@ -29,7 +29,9 @@ const CommunityPostComment = () => {
   const addComment = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityComments/addCommunityComment`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityComments/addCommunityComment`,
         {
           method: "POST",
           credentials: "include",

@@ -12,7 +12,9 @@ const SearchUserFollowButon = ({
       if (isFollowing === 0) {
         // Takip etme isteği gönder
         const res = await fetch(
-          `https://localhost:7291/api/FriendShips/addFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/FriendShips/addFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
           {
             method: "POST",
             credentials: "include",
@@ -27,7 +29,9 @@ const SearchUserFollowButon = ({
       } else if (isFollowing === 1) {
         // Takip isteğini iptal et
         const res = await fetch(
-          `https://localhost:7291/api/FriendShips/removeFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/FriendShips/removeFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
           {
             method: "DELETE",
             credentials: "include",
@@ -42,7 +46,9 @@ const SearchUserFollowButon = ({
       } else if (isFollowing === 2) {
         // Takipten çıkma işlemi
         const res = await fetch(
-          `https://localhost:7291/api/FriendShips/removeFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/FriendShips/removeFriend?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
           {
             method: "DELETE",
             credentials: "include",

@@ -29,7 +29,7 @@ const AddPostModal = ({ visible, onClose, onSubmit }) => {
 
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Posts/add?userId=${userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Posts/add?userId=${userId}`,
         {
           method: "POST",
           headers: {

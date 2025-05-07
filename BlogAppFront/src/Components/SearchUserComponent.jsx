@@ -29,7 +29,9 @@ const SearchUserComponent = ({ userId }) => {
   const fetchUser = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Users/getByIdFront?id=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Users/getByIdFront?id=${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -49,7 +51,9 @@ const SearchUserComponent = ({ userId }) => {
   const fetchCommunities = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityUsers/getById?userId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityUsers/getById?userId=${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -68,7 +72,9 @@ const SearchUserComponent = ({ userId }) => {
     try {
       if (!cookieUserId) return;
       const check = await fetch(
-        `https://localhost:7291/api/FriendShips/check?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/check?senderUserId=${cookieUserId}&receiverUserId=${userId}`,
         {
           method: "GET",
           credentials: "include",

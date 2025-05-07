@@ -11,7 +11,9 @@ const CommunityPostsComponent = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityPosts/getPostByCommunity?communityId=${communityId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityPosts/getPostByCommunity?communityId=${communityId}`,
         {
           method: "GET",
           credentials: "include",
@@ -30,7 +32,9 @@ const CommunityPostsComponent = () => {
         data.map(async (post) => {
           try {
             const userRes = await fetch(
-              `https://localhost:7291/api/Users/getById?id=${post.userId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/Users/getById?id=${
+                post.userId
+              }`,
               {
                 method: "GET",
                 credentials: "include",

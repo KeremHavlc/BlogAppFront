@@ -20,7 +20,9 @@ const PostUserInfo = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Posts/getBypostId?postId=${postId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Posts/getBypostId?postId=${postId}`,
         {
           method: "GET",
           credentials: "include",
@@ -33,7 +35,9 @@ const PostUserInfo = () => {
       }
       const postData = await res.json();
       const userRes = await fetch(
-        `https://localhost:7291/api/Users/getById?id=${postData.userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Users/getById?id=${
+          postData.userId
+        }`,
         {
           method: "GET",
           credentials: "include",
@@ -46,7 +50,9 @@ const PostUserInfo = () => {
 
       // Post count
       const postCount = await fetch(
-        `https://localhost:7291/api/Posts/getbyuserid/${postData.userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Posts/getbyuserid/${
+          postData.userId
+        }`,
         {
           method: "GET",
           credentials: "include",
@@ -59,7 +65,9 @@ const PostUserInfo = () => {
 
       // Arkadaşları al
       const friendsRes = await fetch(
-        `https://localhost:7291/api/FriendShips/getFriends?userId=${postData.userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/getFriends?userId=${postData.userId}`,
         {
           method: "GET",
           credentials: "include",

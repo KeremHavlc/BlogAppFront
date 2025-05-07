@@ -109,8 +109,12 @@ const PostComponent = () => {
     const updated = [...posts];
 
     const endpoint = posts[index].liked
-      ? `https://localhost:7291/api/PostLikes/removeLike?postId=${postId}`
-      : `https://localhost:7291/api/PostLikes/addLike?postId=${postId}`;
+      ? `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/PostLikes/removeLike?postId=${postId}`
+      : `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/PostLikes/addLike?postId=${postId}`;
 
     const method = posts[index].liked ? "DELETE" : "POST";
 

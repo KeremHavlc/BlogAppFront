@@ -34,7 +34,9 @@ const JoinCommunityButton = () => {
 
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${userId}`,
         {
           method: "GET",
           credentials: "include",
@@ -67,7 +69,7 @@ const JoinCommunityButton = () => {
     }
 
     try {
-      const url = `https://localhost:7291/api/CommunityUsers/${
+      const url = `${import.meta.env.VITE_API_BASE_URL}/api/CommunityUsers/${
         joined ? "deleteCommunityUser" : "addCommunityUser"
       }`;
       const method = joined ? "DELETE" : "POST";

@@ -20,7 +20,7 @@ const AllCommunityComponent = () => {
   const fetchCommunities = async () => {
     try {
       const response = await fetch(
-        "https://localhost:7291/api/Communities/getAllCommunities"
+        `${import.meta.env.VITE_API_BASE_URL}/api/Communities/getAllCommunities`
       );
       const data = await response.json();
       setCommunities(data);
@@ -46,7 +46,9 @@ const AllCommunityComponent = () => {
   const handleDeleteClick = async (communityId) => {
     try {
       const response = await fetch(
-        `https://localhost:7291/api/Communities/deleteCommunity?id=${communityId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Communities/deleteCommunity?id=${communityId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -74,7 +76,11 @@ const AllCommunityComponent = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:7291/api/Communities/updateCommunity?communityId=${selectedCommunity.communityId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Communities/updateCommunity?communityId=${
+          selectedCommunity.communityId
+        }`,
         {
           method: "PUT",
           credentials: "include",

@@ -23,7 +23,9 @@ const PendingRequestsComponent = () => {
         if (!userId) return;
 
         const res = await fetch(
-          `https://localhost:7291/api/FriendShips/getPendingFriends?userId=${userId}`
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/FriendShips/getPendingFriends?userId=${userId}`
         );
 
         if (!res.ok) {
@@ -55,7 +57,9 @@ const PendingRequestsComponent = () => {
       if (!receiverUserId) return;
 
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/acceptFriend?receiverUserId=${receiverUserId}&senderUserId=${senderId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/acceptFriend?receiverUserId=${receiverUserId}&senderUserId=${senderId}`,
         { method: "POST" }
       );
       if (!res.ok) {
@@ -85,7 +89,9 @@ const PendingRequestsComponent = () => {
       if (!receiverUserId) return;
 
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/removeFriend?receiverUserId=${receiverUserId}&senderUserId=${senderId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/removeFriend?receiverUserId=${receiverUserId}&senderUserId=${senderId}`,
         { method: "DELETE" }
       );
       if (!res.ok) {

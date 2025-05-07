@@ -30,7 +30,9 @@ const AllCommunitiesComponent = () => {
   const fetchAllCommunities = async () => {
     try {
       const res = await fetch(
-        "https://localhost:7291/api/Communities/getAllCommunities",
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Communities/getAllCommunities`,
         {
           method: "GET",
           credentials: "include",
@@ -53,7 +55,9 @@ const AllCommunitiesComponent = () => {
   const checkCommunityJoined = async (communityId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${cookieUserId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${cookieUserId}`,
         {
           method: "GET",
           credentials: "include",
@@ -84,7 +88,9 @@ const AllCommunitiesComponent = () => {
 
       if (isJoined) {
         res = await fetch(
-          `https://localhost:7291/api/CommunityUsers/deleteCommunityUser?communityId=${communityId}&userId=${cookieUserId}`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/CommunityUsers/deleteCommunityUser?communityId=${communityId}&userId=${cookieUserId}`,
           {
             method: "DELETE",
             credentials: "include",
@@ -100,7 +106,9 @@ const AllCommunitiesComponent = () => {
         );
       } else {
         res = await fetch(
-          `https://localhost:7291/api/CommunityUsers/addCommunityUser`,
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/CommunityUsers/addCommunityUser`,
           {
             method: "POST",
             credentials: "include",

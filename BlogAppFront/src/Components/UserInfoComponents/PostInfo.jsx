@@ -27,7 +27,7 @@ const PostInfo = () => {
     }
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Posts/getbyuserid/${userId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/Posts/getbyuserid/${userId}`,
         {
           method: "GET",
           credentials: "include",

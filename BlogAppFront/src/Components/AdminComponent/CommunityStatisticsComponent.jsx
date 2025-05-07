@@ -17,7 +17,9 @@ const CommunityStatisticsComponent = () => {
     const fetchStats = async () => {
       try {
         const userCountRes = await fetch(
-          "https://localhost:7291/api/CommunityUsers/getAllCommunityUsersCount",
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/api/CommunityUsers/getAllCommunityUsersCount`,
           {
             credentials: "include",
           }
@@ -36,13 +38,19 @@ const CommunityStatisticsComponent = () => {
         const dataWithNames = await Promise.all(
           userCountsArray.map(async (item) => {
             const communityRes = await fetch(
-              `https://localhost:7291/api/Communities/getCommunityById?id=${item.communityId}`,
+              `${
+                import.meta.env.VITE_API_BASE_URL
+              }/api/Communities/getCommunityById?id=${item.communityId}`,
               { credentials: "include" }
             );
             const communityData = await communityRes.json();
 
             const postRes = await fetch(
-              `https://localhost:7291/api/CommunityPosts/getPostByCommunity?communityId=${item.communityId}`,
+              `${
+                import.meta.env.VITE_API_BASE_URL
+              }/api/CommunityPosts/getPostByCommunity?communityId=${
+                item.communityId
+              }`,
               { credentials: "include" }
             );
             const posts = await postRes.json();

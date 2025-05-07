@@ -4,6 +4,8 @@ import image1 from "../Utilities/landing1.png";
 import image2 from "../Utilities/landing2.png";
 import image3 from "../Utilities/landing3.png";
 import backgroundImage from "../Utilities/background.png";
+import logo from "../Utilities/logo-transparent.png";
+
 import { toast } from "react-fox-toast";
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -23,7 +25,13 @@ const LandingPage = () => {
       {/* Header */}
       <header className="w-full bg-white shadow-sm fixed top-0 left-0 z-20">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-red-600">Parrot</h1>
+          {/* Logo + Parrot */}
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="Logo" className="w-12 h-12" />
+            <h1 className="text-2xl font-bold text-red-600">Parrot</h1>
+          </div>
+
+          {/* Navbar */}
           <nav className="space-x-6 text-gray-700">
             <button onClick={handleCopyEmail} className="hover:text-red-600">
               İletişim

@@ -33,7 +33,9 @@ const CommunitiesComponent = () => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityUsers/getAllCommunityUsersCount`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityUsers/getAllCommunityUsersCount`,
         {
           method: "GET",
           credentials: "include",
@@ -58,7 +60,9 @@ const CommunitiesComponent = () => {
   const fetchCommunityName = async (communityId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/Communities/getCommunityById?id=${communityId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/Communities/getCommunityById?id=${communityId}`,
         {
           method: "GET",
           credentials: "include",
@@ -83,7 +87,9 @@ const CommunitiesComponent = () => {
   const checkCommunityJoined = async (communityId) => {
     try {
       const res = await fetch(
-        `https://localhost:7291/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${cookieUserId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/CommunityUsers/check?communityId=${communityId}&joinUserId=${cookieUserId}`,
         {
           method: "GET",
           credentials: "include",

@@ -31,7 +31,9 @@ const FollowerInfo = () => {
     }
     try {
       const res = await fetch(
-        `https://localhost:7291/api/FriendShips/getFriends?userId=${userId}`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/FriendShips/getFriends?userId=${userId}`,
         {
           method: "GET",
           credentials: "include",
