@@ -9,20 +9,18 @@ const SearchUserComponent = ({ userId }) => {
   const [isFollowing, setIsFollowing] = useState(0);
   const [cookieUserId, setCookieUserId] = useState();
   const [userCommunities, setUserCommunities] = useState([]);
-
-  const getUserFromToken = () => {
+  const getUserFromToken = async () => {
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("authToken="))
-        ?.split("=")[1];
-
-      if (!token) return null;
-
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      setCookieUserId(payload?.id);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Auth/me`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      setCookieUserId(data.id);
     } catch (err) {
-      console.error("JWT decode hatası:", err);
+      console.error("Me endpoint hatası:", err);
     }
   };
 

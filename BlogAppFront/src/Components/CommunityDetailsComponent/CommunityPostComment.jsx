@@ -9,20 +9,18 @@ const CommunityPostComment = () => {
   const [userId, setUserId] = useState();
   const { communityId, postId } = useParams();
   console.log(postId);
-  const getUserFromToken = () => {
+  const getUserFromToken = async () => {
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("authToken="))
-        ?.split("=")[1];
-
-      if (!token) return;
-
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      setUserId(payload?.id);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/Auth/me`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      setCookieUserId(data.id);
     } catch (err) {
-      console.error("JWT decode hatası:", err);
-      toast.error("Giriş yapılmamış!");
+      console.error("Me endpoint hatası:", err);
     }
   };
 
